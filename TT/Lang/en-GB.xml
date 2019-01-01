@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Lang>
+  <!-- 标签 -->
+  <Item Key="lblLogin">
+    <value>Login</value>
+  </Item>
+  <Item Key="lblUser">
+    <value>User Name</value>
+  </Item>
+  <Item Key="lblPwd">
+    <value>Passward</value>
+  </Item>
+  <Item Key="lblCurrentUser">
+    <value>User Name</value>
+  </Item>
+  <Item Key="lblCurrentProject">
+    <value>Project Name</value>
+  </Item>
+  <Item Key="lblTaskReceived">
+    <value>Received</value>
+  </Item>
+  <Item Key="lblTaskFinished">
+    <value>Finished</value>
+  </Item>
+  <!-- New -->
+  <Item Key="lblTimeLeft">
+    <value>Time Left</value>
+  </Item>
+  <Item Key="lblCustomer">
+    <value>Client</value>
+  </Item>
+  <Item Key="lblTeam">
+    <value>Team</value>
+  </Item>
+  <Item Key="lblTaskTime">
+    <value>TaskTime</value>
+  </Item>
+  <Item Key="lblComment">
+    <value>Comment</value>
+  </Item>
+  <Item Key="tlSubmit">
+    <value>Daily Work Submit</value>
+  </Item>
+  <Item Key="tgSubmitAll">
+    <value>Submit All</value>
+  </Item>
+  <Item Key="tgExit">
+    <value>Close</value>
+  </Item>
+  <Item Key="mainTitle">
+    <value>Recording...</value>
+  </Item>
+
+
+
+  <!-- 按钮 -->
+  <Item Key="btnLogin">
+    <value>Login</value>
+  </Item>
+  <Item Key="btnExit">
+    <value>Exit</value>
+  </Item>
+  <Item Key="btnCommit">
+    <value>Submit</value>
+  </Item>
+  <Item Key="btnClose">
+    <value>Close</value>
+  </Item>
+  <!-- New -->
+  <Item Key="btnAdd">
+    <value>Add</value>
+  </Item>
+  <Item Key="btnDelete">
+    <value>Remove</value>
+  </Item>
+  <Item Key="btnClearAll">
+    <value>Clear All</value>
+  </Item>
+
+  <!-- 提示 -->
+  <Item Key="InvalidPassword">
+    <value>User Name or Password is wrong</value>
+  </Item>
+  <Item Key="FileNotFound">
+    <value>File not existed</value>
+  </Item>
+  <Item Key="HasRecording">
+    <value>Others Project is running</value>
+  </Item>
+  <Item Key="NoRecording">
+    <value>No Project is tracking</value>
+  </Item>
+  <Item Key="NoSelectedFile">
+    <value>Please select project</value>
+  </Item>
+  <Item Key="NotFinish">
+    <value>Cannot quit, need submit time first</value>
+  </Item>
+  <Item Key="CountError">
+    <value>Number not matched</value>
+  </Item>
+  <Item Key="SaveError">
+    <value>Error in saving, please try again</value>
+  </Item>
+  <Item Key="ClearTaskTime">
+    <value>Confirm to clear?</value>
+  </Item>
+  <!-- New -->
+  <Item Key="ComfirmDelete">
+    <value>Confirm to delete?</value>
+  </Item>
+  <Item Key="InputComment">
+    <value>Please Input Comment</value>
+  </Item>
+  <Item Key="TimeOverflow">
+    <value>Time Overflow</value>
+  </Item>
+  <Item Key="SameTeam">
+    <value>Team has been record</value>
+  </Item>
+  <Item Key="UploadSuccess">
+    <value>Data has been uploaded</value>
+  </Item>
+  <Item Key="NotEmpty">
+    <value>Timeleft is not empty</value>
+  </Item>
+  <Item Key="NotUploaded">
+    <value>Projects have not been uploaded</value>
+  </Item>
+  <Item Key="NotResolved">
+    <value>Projects have not been resolved</value>
+  </Item>
+  <Item Key="NoTeam">
+    <value>未选择客户队伍</value>
+  </Item>
+</Lang>

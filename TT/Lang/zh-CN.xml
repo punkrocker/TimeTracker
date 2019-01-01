@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Lang>
+  <!-- 标签 -->
+  <Item Key="lblLogin">
+    <value>登录</value>
+  </Item>
+  <Item Key="lblUser">
+    <value>用户名</value>
+  </Item>
+  <Item Key="lblPwd">
+    <value>密  码</value>
+  </Item>
+  <Item Key="lblCurrentUser">
+    <value>用户名</value>
+  </Item>
+  <Item Key="lblCurrentProject">
+    <value>项目名</value>
+  </Item>
+  <Item Key="lblTaskReceived">
+    <value>Received</value>
+  </Item>
+  <Item Key="lblTaskFinished">
+    <value>Finished</value>
+  </Item>
+  <Item Key="tlSubmit">
+    <value>提交每日任务</value>
+  </Item>
+  <Item Key="tgSubmitAll">
+    <value>全部提交</value>
+  </Item>
+  <Item Key="tgExit">
+    <value>关闭</value>
+  </Item>
+  <Item Key="mainTitle">
+    <value>计时中...</value>
+  </Item>
+
+  <!-- 按钮 -->
+  <Item Key="btnLogin">
+    <value>登录</value>
+  </Item>
+  <Item Key="btnExit">
+    <value>退出</value>
+  </Item>
+  <Item Key="btnCommit">
+    <value>提交</value>
+  </Item>
+  <Item Key="btnClose">
+    <value>关闭</value>
+  </Item>
+
+  <!-- 提示 -->
+  <Item Key="InvalidPassword">
+    <value>用户名或密码错误，请重新输入</value>
+  </Item>
+  <Item Key="FileNotFound">
+    <value>文件不存在</value>
+  </Item>
+  <Item Key="HasRecording">
+    <value>有项目正在计时</value>
+  </Item>
+  <Item Key="NoRecording">
+    <value>没有项目正在计时</value>
+  </Item>
+  <Item Key="NoSelectedFile">
+    <value>请选择要操作的项目</value>
+  </Item>
+  <Item Key="NotFinish">
+    <value>尚未提交所有项目，不能退出</value>
+  </Item>
+  <Item Key="CountError">
+    <value>数量异常，请重新输入</value>
+  </Item>
+  <Item Key="SaveError">
+    <value>保存数据异常，请重新保存</value>
+  </Item>
+  <Item Key="ClearTaskTime">
+    <value>确认清除项目计时吗？清除后不可恢复</value>
+  </Item>
+  <Item Key="NoTeam">
+    <value>未选择客户队伍</value>
+  </Item>
+</Lang>

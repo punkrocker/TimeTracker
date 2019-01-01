@@ -1,0 +1,20 @@
+﻿<Window x:Class="TT.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="150" Width="150" WindowStyle="None" Background="{x:Null}"  AllowsTransparency="True" MaxHeight="150" MaxWidth="150" MinHeight="150" MinWidth="150" ResizeMode="NoResize">
+
+    <!--<Button  Width="50" Height="50"  Margin="10" PreviewMouseLeftButtonDown="Button_PreviewMouseLeftButtonDown">
+        <Button.Background>
+            <ImageBrush ImageSource="Images/controlbutton.png" />
+        </Button.Background>
+    </Button>-->
+    <Grid>
+        <Image Width="128" Height="128" Source="Images/controlbutton.png" MouseLeftButtonDown="Button_PreviewMouseLeftButtonDown" MouseRightButtonDown="Image_MouseRightButtonDown">
+        </Image>
+        <Image x:Name="btnRecord" Margin="0 12 0 0" Width="20" Height="20" HorizontalAlignment="Left" MouseLeftButtonDown="btnRecord_MouseLeftButtonDown" VerticalAlignment="Top" Source="Images/record.png" />
+        <Image x:Name="btnPause" Margin="0 37 0 0" Width="20" Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Source="Images/pause.png" />
+        <Image x:Name="btnStop" Margin="0 62 0 0" Width="20" Height="20" HorizontalAlignment="Left" MouseLeftButtonDown="btnStop_Click" VerticalAlignment="Top" Source="Images/stop.png" />
+        <Image x:Name="btnFinish" Margin="0 87 0 0" Width="20" Height="20" HorizontalAlignment="Left" MouseLeftButtonDown="btnRecord_MouseLeftButtonDown" VerticalAlignment="Top" Source="Images/finish.png" />
+        <TextBlock x:Name="txtTime" Width="64" VerticalAlignment="Top" FontSize="16" HorizontalAlignment="Center" Text="00:00" />
+    </Grid>
+</Window>

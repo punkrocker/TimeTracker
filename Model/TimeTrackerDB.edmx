@@ -1,0 +1,729 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TimeTrackerDB.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Nums">
+          <Key>
+            <PropertyRef Name="n" />
+          </Key>
+          <Property Name="n" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_HR_Team">
+          <Key>
+            <PropertyRef Name="TeamID" />
+          </Key>
+          <Property Name="TeamID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TeamCode" Type="varchar" MaxLength="10" />
+          <Property Name="TeamName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Desc" Type="nvarchar" MaxLength="100" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="RecordTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="T_HR_TeamMember">
+          <Key>
+            <PropertyRef Name="TeamID" />
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="TeamID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Charge" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="RecordTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="T_PM_Member">
+          <Key>
+            <PropertyRef Name="ProjectID" />
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="ProjectID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Charge" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="RecordTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="T_PM_Project">
+          <Key>
+            <PropertyRef Name="ProjectID" />
+          </Key>
+          <Property Name="ProjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProjectCode" Type="varchar" MaxLength="10" />
+          <Property Name="ProjectName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="100" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="RecordTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="T_PM_ReportRecord">
+          <Key>
+            <PropertyRef Name="RecordID" />
+          </Key>
+          <Property Name="RecordID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RealTime" Type="int" />
+          <Property Name="ReportTime" Type="int" />
+          <Property Name="CustomerID" Type="int" />
+          <Property Name="ProjectID" Type="int" />
+          <Property Name="RecordTime" Type="datetime" />
+          <Property Name="TaskNum" Type="int" />
+        </EntityType>
+        <EntityType Name="T_PM_Task">
+          <Key>
+            <PropertyRef Name="ProjectID" />
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="TaskDate" />
+            <PropertyRef Name="SubmitSeq" />
+            <PropertyRef Name="TeamID" />
+          </Key>
+          <Property Name="ProjectID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="TaskDate" Type="datetime" Nullable="false" />
+          <Property Name="SubmitSeq" Type="int" Nullable="false" />
+          <Property Name="TeamID" Type="int" Nullable="false" />
+          <Property Name="PlanTask" Type="int" />
+          <Property Name="RealTask" Type="int" />
+          <Property Name="TaskTime" Type="int" />
+          <Property Name="ReportTime" Type="int" />
+          <Property Name="Desc" Type="nvarchar(max)" />
+          <Property Name="SubmitTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="T_PM_UserTime">
+          <Key>
+            <PropertyRef Name="ProjectID" />
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="ProjectID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Charge" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="PlanTask" Type="int" />
+          <Property Name="SubmitTime" Type="datetime" />
+          <Property Name="RealTask" Type="int" />
+          <Property Name="TaskTime" Type="int" />
+          <Property Name="Desc" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="T_SD_Customer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="100" />
+          <Property Name="Desc" Type="nvarchar" MaxLength="100" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="Linkman" Type="varchar" MaxLength="20" />
+          <Property Name="Tel" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="T_SD_CustomerTeam">
+          <Key>
+            <PropertyRef Name="TeamID" />
+          </Key>
+          <Property Name="TeamID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TeamCode" Type="varchar" MaxLength="10" />
+          <Property Name="TeamName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="Desc" Type="nvarchar" MaxLength="100" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="RecordTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="T_Sys_Department">
+          <Key>
+            <PropertyRef Name="DepID" />
+          </Key>
+          <Property Name="DepID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Desc" Type="nvarchar" MaxLength="100" />
+          <Property Name="Status" Type="int" />
+        </EntityType>
+        <EntityType Name="T_Sys_Function">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="code" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="pid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_Sys_Function2Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+            <PropertyRef Name="FunctionID" />
+          </Key>
+          <Property Name="RoleID" Type="int" Nullable="false" />
+          <Property Name="FunctionID" Type="int" Nullable="false" />
+          <Property Name="FunctionCode" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="T_Sys_Log">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="OperTime" Type="datetime" />
+          <Property Name="OperIP" Type="nvarchar" MaxLength="50" />
+          <Property Name="OperDesc" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="T_Sys_OperationLog">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="FunctionCode" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="OperType" Type="int" Nullable="false" />
+          <Property Name="OperTime" Type="datetime" Nullable="false" />
+          <Property Name="OperDescription" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="T_Sys_OperType">
+          <Key>
+            <PropertyRef Name="OperType" />
+          </Key>
+          <Property Name="OperType" Type="int" Nullable="false" />
+          <Property Name="OperName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_Sys_Roles">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Desc" Type="nvarchar" MaxLength="100" />
+          <Property Name="DepID" Type="int" />
+          <Property Name="Status" Type="int" />
+        </EntityType>
+        <EntityType Name="T_Sys_Status">
+          <Key>
+            <PropertyRef Name="TypeID" />
+            <PropertyRef Name="Status" />
+          </Key>
+          <Property Name="TypeID" Type="int" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Remark" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="T_Sys_UserInfo">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UseName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RealName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserPwd" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Dep" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Tel" Type="nvarchar" MaxLength="50" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatTime" Type="datetime" />
+          <Property Name="LoginTime" Type="datetime" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="Role" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="TimeTrackerDBStoreContainer">
+          <EntitySet Name="Nums" EntityType="Self.Nums" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_HR_Team" EntityType="Self.T_HR_Team" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_HR_TeamMember" EntityType="Self.T_HR_TeamMember" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_PM_Member" EntityType="Self.T_PM_Member" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_PM_Project" EntityType="Self.T_PM_Project" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_PM_ReportRecord" EntityType="Self.T_PM_ReportRecord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_PM_Task" EntityType="Self.T_PM_Task" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_PM_UserTime" EntityType="Self.T_PM_UserTime" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_SD_Customer" EntityType="Self.T_SD_Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_SD_CustomerTeam" EntityType="Self.T_SD_CustomerTeam" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_Sys_Department" EntityType="Self.T_Sys_Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_Sys_Function" EntityType="Self.T_Sys_Function" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_Sys_Function2Role" EntityType="Self.T_Sys_Function2Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_Sys_Log" EntityType="Self.T_Sys_Log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_Sys_OperationLog" EntityType="Self.T_Sys_OperationLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_Sys_OperType" EntityType="Self.T_Sys_OperType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_Sys_Roles" EntityType="Self.T_Sys_Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_Sys_Status" EntityType="Self.T_Sys_Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_Sys_UserInfo" EntityType="Self.T_Sys_UserInfo" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TimeTrackerDB" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Nums">
+          <Key>
+            <PropertyRef Name="n" />
+          </Key>
+          <Property Name="n" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_HR_Team">
+          <Key>
+            <PropertyRef Name="TeamID" />
+          </Key>
+          <Property Name="TeamID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeamCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TeamName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Desc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="RecordTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="T_HR_TeamMember">
+          <Key>
+            <PropertyRef Name="TeamID" />
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="TeamID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Charge" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="RecordTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="T_PM_Member">
+          <Key>
+            <PropertyRef Name="ProjectID" />
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="ProjectID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Charge" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="RecordTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="T_PM_Project">
+          <Key>
+            <PropertyRef Name="ProjectID" />
+          </Key>
+          <Property Name="ProjectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ProjectName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="Remark" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="RecordTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="T_PM_Task">
+          <Key>
+            <PropertyRef Name="ProjectID" />
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="TaskDate" />
+            <PropertyRef Name="SubmitSeq" />
+            <PropertyRef Name="TeamID" />
+          </Key>
+          <Property Name="ProjectID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="TaskDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SubmitSeq" Type="Int32" Nullable="false" />
+          <Property Name="TeamID" Type="Int32" Nullable="false" />
+          <Property Name="PlanTask" Type="Int32" />
+          <Property Name="RealTask" Type="Int32" />
+          <Property Name="TaskTime" Type="Int32" />
+          <Property Name="ReportTime" Type="Int32" />
+          <Property Name="Desc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SubmitTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="T_PM_UserTime">
+          <Key>
+            <PropertyRef Name="ProjectID" />
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="ProjectID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Charge" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="PlanTask" Type="Int32" />
+          <Property Name="SubmitTime" Type="DateTime" Precision="3" />
+          <Property Name="RealTask" Type="Int32" />
+          <Property Name="TaskTime" Type="Int32" />
+          <Property Name="Desc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="T_SD_Customer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Desc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="Linkman" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Tel" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="T_SD_CustomerTeam">
+          <Key>
+            <PropertyRef Name="TeamID" />
+          </Key>
+          <Property Name="TeamID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeamCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TeamName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="Desc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="RecordTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="T_Sys_Department">
+          <Key>
+            <PropertyRef Name="DepID" />
+          </Key>
+          <Property Name="DepID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Desc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+        </EntityType>
+        <EntityType Name="T_Sys_Function">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pid" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_Sys_Function2Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+            <PropertyRef Name="FunctionID" />
+          </Key>
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <Property Name="FunctionID" Type="Int32" Nullable="false" />
+          <Property Name="FunctionCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="T_Sys_Log">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="OperTime" Type="DateTime" Precision="3" />
+          <Property Name="OperIP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OperDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="T_Sys_OperationLog">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="FunctionCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OperType" Type="Int32" Nullable="false" />
+          <Property Name="OperTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="OperDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="T_Sys_OperType">
+          <Key>
+            <PropertyRef Name="OperType" />
+          </Key>
+          <Property Name="OperType" Type="Int32" Nullable="false" />
+          <Property Name="OperName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_Sys_Roles">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Desc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DepID" Type="Int32" />
+          <Property Name="Status" Type="Int32" />
+        </EntityType>
+        <EntityType Name="T_Sys_Status">
+          <Key>
+            <PropertyRef Name="TypeID" />
+            <PropertyRef Name="Status" />
+          </Key>
+          <Property Name="TypeID" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Remark" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="T_Sys_UserInfo">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UseName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RealName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserPwd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Dep" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Tel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatTime" Type="DateTime" Precision="3" />
+          <Property Name="LoginTime" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="Role" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="TimeTrackerEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Nums" EntityType="Self.Nums" />
+          <EntitySet Name="T_HR_Team" EntityType="Self.T_HR_Team" />
+          <EntitySet Name="T_HR_TeamMember" EntityType="Self.T_HR_TeamMember" />
+          <EntitySet Name="T_PM_Member" EntityType="Self.T_PM_Member" />
+          <EntitySet Name="T_PM_Project" EntityType="Self.T_PM_Project" />
+          <EntitySet Name="T_PM_Task" EntityType="Self.T_PM_Task" />
+          <EntitySet Name="T_PM_UserTime" EntityType="Self.T_PM_UserTime" />
+          <EntitySet Name="T_SD_Customer" EntityType="Self.T_SD_Customer" />
+          <EntitySet Name="T_SD_CustomerTeam" EntityType="Self.T_SD_CustomerTeam" />
+          <EntitySet Name="T_Sys_Department" EntityType="Self.T_Sys_Department" />
+          <EntitySet Name="T_Sys_Function" EntityType="Self.T_Sys_Function" />
+          <EntitySet Name="T_Sys_Function2Role" EntityType="Self.T_Sys_Function2Role" />
+          <EntitySet Name="T_Sys_Log" EntityType="Self.T_Sys_Log" />
+          <EntitySet Name="T_Sys_OperationLog" EntityType="Self.T_Sys_OperationLog" />
+          <EntitySet Name="T_Sys_OperType" EntityType="Self.T_Sys_OperType" />
+          <EntitySet Name="T_Sys_Roles" EntityType="Self.T_Sys_Roles" />
+          <EntitySet Name="T_Sys_Status" EntityType="Self.T_Sys_Status" />
+          <EntitySet Name="T_Sys_UserInfo" EntityType="Self.T_Sys_UserInfo" />
+          <EntitySet Name="T_PM_ReportRecord" EntityType="TimeTrackerDB.T_PM_ReportRecord" />
+        </EntityContainer>
+        <EntityType Name="T_PM_ReportRecord">
+          <Key>
+            <PropertyRef Name="RecordID" />
+          </Key>
+          <Property Name="RecordID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RealTime" Type="Int32" />
+          <Property Name="ReportTime" Type="Int32" />
+          <Property Name="CustomerID" Type="Int32" />
+          <Property Name="ProjectID" Type="Int32" />
+          <Property Name="RecordTime" Type="DateTime" Precision="3" />
+          <Property Name="TaskNum" Type="Int32" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TimeTrackerDBStoreContainer" CdmEntityContainer="TimeTrackerEntities">
+          <EntitySetMapping Name="Nums">
+            <EntityTypeMapping TypeName="TimeTrackerDB.Nums">
+              <MappingFragment StoreEntitySet="Nums">
+                <ScalarProperty Name="n" ColumnName="n" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_HR_Team">
+            <EntityTypeMapping TypeName="TimeTrackerDB.T_HR_Team">
+              <MappingFragment StoreEntitySet="T_HR_Team">
+                <ScalarProperty Name="TeamID" ColumnName="TeamID" />
+                <ScalarProperty Name="TeamCode" ColumnName="TeamCode" />
+                <ScalarProperty Name="TeamName" ColumnName="TeamName" />
+                <ScalarProperty Name="Desc" ColumnName="Desc" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="RecordTime" ColumnName="RecordTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_HR_TeamMember">
+            <EntityTypeMapping TypeName="TimeTrackerDB.T_HR_TeamMember">
+              <MappingFragment StoreEntitySet="T_HR_TeamMember">
+                <ScalarProperty Name="TeamID" ColumnName="TeamID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Charge" ColumnName="Charge" />
+                <ScalarProperty Name="RecordTime" ColumnName="RecordTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_PM_Member">
+            <EntityTypeMapping TypeName="TimeTrackerDB.T_PM_Member">
+              <MappingFragment StoreEntitySet="T_PM_Member">
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Charge" ColumnName="Charge" />
+                <ScalarProperty Name="RecordTime" ColumnName="RecordTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_PM_Project">
+            <EntityTypeMapping TypeName="TimeTrackerDB.T_PM_Project">
+              <MappingFragment StoreEntitySet="T_PM_Project">
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="ProjectCode" ColumnName="ProjectCode" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="RecordTime" ColumnName="RecordTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_PM_Task">
+            <EntityTypeMapping TypeName="TimeTrackerDB.T_PM_Task">
+              <MappingFragment StoreEntitySet="T_PM_Task">
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="TaskDate" ColumnName="TaskDate" />
+                <ScalarProperty Name="SubmitSeq" ColumnName="SubmitSeq" />
+                <ScalarProperty Name="TeamID" ColumnName="TeamID" />
+                <ScalarProperty Name="PlanTask" ColumnName="PlanTask" />
+                <ScalarProperty Name="RealTask" ColumnName="RealTask" />
+                <ScalarProperty Name="TaskTime" ColumnName="TaskTime" />
+                <ScalarProperty Name="ReportTime" ColumnName="ReportTime" />
+                <ScalarProperty Name="Desc" ColumnName="Desc" />
+                <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_PM_UserTime">
+            <EntityTypeMapping TypeName="TimeTrackerDB.T_PM_UserTime">
+              <MappingFragment StoreEntitySet="T_PM_UserTime">
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Charge" ColumnName="Charge" />
+                <ScalarProperty Name="PlanTask" ColumnName="PlanTask" />
+                <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
+                <ScalarProperty Name="RealTask" ColumnName="RealTask" />
+                <ScalarProperty Name="TaskTime" ColumnName="TaskTime" />
+                <ScalarProperty Name="Desc" ColumnName="Desc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_SD_Customer">
+            <EntityTypeMapping TypeName="TimeTrackerDB.T_SD_Customer">
+              <MappingFragment StoreEntitySet="T_SD_Customer">
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Desc" ColumnName="Desc" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Linkman" ColumnName="Linkman" />
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_SD_CustomerTeam">
+            <EntityTypeMapping TypeName="TimeTrackerDB.T_SD_CustomerTeam">
+              <MappingFragment StoreEntitySet="T_SD_CustomerTeam">
+                <ScalarProperty Name="TeamID" ColumnName="TeamID" />
+                <ScalarProperty Name="TeamCode" ColumnName="TeamCode" />
+                <ScalarProperty Name="TeamName" ColumnName="TeamName" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="Desc" ColumnName="Desc" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="RecordTime" ColumnName="RecordTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_Sys_Department">
+            <EntityTypeMapping TypeName="TimeTrackerDB.T_Sys_Department">
+              <MappingFragment StoreEntitySet="T_Sys_Department">
+                <ScalarProperty Name="DepID" ColumnName="DepID" />
+                <ScalarProperty Name="DepName" ColumnName="DepName" />
+                <ScalarProperty Name="Desc" ColumnName="Desc" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_Sys_Function">
+            <EntityTypeMapping TypeName="TimeTrackerDB.T_Sys_Function">
+              <MappingFragment StoreEntitySet="T_Sys_Function">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="pid" ColumnName="pid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_Sys_Function2Role">
+            <EntityTypeMapping TypeName="TimeTrackerDB.T_Sys_Function2Role">
+              <MappingFragment StoreEntitySet="T_Sys_Function2Role">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="FunctionID" ColumnName="FunctionID" />
+                <ScalarProperty Name="FunctionCode" ColumnName="FunctionCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_Sys_Log">
+            <EntityTypeMapping TypeName="TimeTrackerDB.T_Sys_Log">
+              <MappingFragment StoreEntitySet="T_Sys_Log">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="OperTime" ColumnName="OperTime" />
+                <ScalarProperty Name="OperIP" ColumnName="OperIP" />
+                <ScalarProperty Name="OperDesc" ColumnName="OperDesc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_Sys_OperationLog">
+            <EntityTypeMapping TypeName="TimeTrackerDB.T_Sys_OperationLog">
+              <MappingFragment StoreEntitySet="T_Sys_OperationLog">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="FunctionCode" ColumnName="FunctionCode" />
+                <ScalarProperty Name="OperType" ColumnName="OperType" />
+                <ScalarProperty Name="OperTime" ColumnName="OperTime" />
+                <ScalarProperty Name="OperDescription" ColumnName="OperDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_Sys_OperType">
+            <EntityTypeMapping TypeName="TimeTrackerDB.T_Sys_OperType">
+              <MappingFragment StoreEntitySet="T_Sys_OperType">
+                <ScalarProperty Name="OperType" ColumnName="OperType" />
+                <ScalarProperty Name="OperName" ColumnName="OperName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_Sys_Roles">
+            <EntityTypeMapping TypeName="TimeTrackerDB.T_Sys_Roles">
+              <MappingFragment StoreEntitySet="T_Sys_Roles">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="Desc" ColumnName="Desc" />
+                <ScalarProperty Name="DepID" ColumnName="DepID" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_Sys_Status">
+            <EntityTypeMapping TypeName="TimeTrackerDB.T_Sys_Status">
+              <MappingFragment StoreEntitySet="T_Sys_Status">
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_Sys_UserInfo">
+            <EntityTypeMapping TypeName="TimeTrackerDB.T_Sys_UserInfo">
+              <MappingFragment StoreEntitySet="T_Sys_UserInfo">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UseName" ColumnName="UseName" />
+                <ScalarProperty Name="RealName" ColumnName="RealName" />
+                <ScalarProperty Name="UserPwd" ColumnName="UserPwd" />
+                <ScalarProperty Name="Dep" ColumnName="Dep" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="CreatTime" ColumnName="CreatTime" />
+                <ScalarProperty Name="LoginTime" ColumnName="LoginTime" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_PM_ReportRecord">
+            <EntityTypeMapping TypeName="TimeTrackerDB.T_PM_ReportRecord">
+              <MappingFragment StoreEntitySet="T_PM_ReportRecord">
+                <ScalarProperty Name="TaskNum" ColumnName="TaskNum" />
+                <ScalarProperty Name="RecordTime" ColumnName="RecordTime" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="ReportTime" ColumnName="ReportTime" />
+                <ScalarProperty Name="RealTime" ColumnName="RealTime" />
+                <ScalarProperty Name="RecordID" ColumnName="RecordID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

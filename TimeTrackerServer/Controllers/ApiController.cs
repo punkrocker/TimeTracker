@@ -11,7 +11,6 @@ namespace TimeTrackerServer.Controllers
 {
     public class ApiController : Controller
     {
-        [HttpPost]
         public ActionResult Login(LoginPara para)
         {
             WebResult result = new WebResult()
@@ -23,8 +22,15 @@ namespace TimeTrackerServer.Controllers
             using (var db = new TimeTrackerEntities())
             {
                 var password = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(para.Password, "MD5");
-
-                
+                var user = db.T_Sys_UserInfo.Where(a => a.UseName.Equals(para.UserName)).FirstOrDefault();
+                if (user.UserPwd.Equals(password))
+                {
+                    result.Code = SystemConst.MSG_SUCCESS;
+                }
+                else
+                {
+                    result.Message = "ERR_PWD";
+                }
             }
             return Content(AppUtils.JsonSerializer(result));
         }

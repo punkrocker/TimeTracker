@@ -7,7 +7,12 @@ namespace Model
 {
     public class SystemConst
     {
-        public static int MSG_ERR_UNKNOWN = -1;
-        public static int MSG_SUCCESS = 0;
+        public static int MsgErrUnknown = -1;
+        public static int MsgSuccess = 0;
+
+        public static int StatusEnable = 1;
+        public static int StatusDisable = 0;
+
+        public static int StatusIssued = 10;
     }
 }

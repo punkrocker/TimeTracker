@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Model;
 using Model.Dto;
 using Model.WebResult;
+using Newtonsoft.Json;
 
 namespace TimeTrackerServer.Controllers
 {
@@ -15,7 +16,7 @@ namespace TimeTrackerServer.Controllers
         {
             WebResult result = new WebResult()
             {
-                Code = SystemConst.MSG_ERR_UNKNOWN,
+                Code = SystemConst.MsgErrUnknown,
                 Message = String.Empty
             };
 
@@ -25,7 +26,7 @@ namespace TimeTrackerServer.Controllers
                 var user = db.T_Sys_UserInfo.Where(a => a.UseName.Equals(para.UserName)).FirstOrDefault();
                 if (user.UserPwd.Equals(password))
                 {
-                    result.Code = SystemConst.MSG_SUCCESS;
+                    result.Code = SystemConst.MsgSuccess;
                 }
                 else
                 {
@@ -35,5 +36,30 @@ namespace TimeTrackerServer.Controllers
             return Content(AppUtils.JsonSerializer(result));
         }
 
+        public ActionResult GetProjects(int userID)
+        {
+            WebResult result = new WebResult()
+            {
+                Code = SystemConst.MsgErrUnknown,
+                Message = String.Empty
+            };
+
+            using (var db = new TimeTrackerEntities())
+            {
+                var user = db.T_Sys_UserInfo.Where(a => a.UserID == userID).FirstOrDefault();
+                if (user == null || user.Status == SystemConst.StatusDisable)
+                    return Content(AppUtils.JsonSerializer(result));
+                var usersProjects =
+                    (from projects in db.T_PM_Project.Where(a => a.Status == SystemConst.StatusIssued)
+                        join members in db.T_PM_Member on projects.ProjectID equals members.ProjectID
+                            into memberProjects
+                        from memberProject in memberProjects.DefaultIfEmpty()
+                        select new
+                        {
+
+                        }).ToList();
+            }
+            return Content(AppUtils.JsonSerializer(result));
+        }
     }
 }

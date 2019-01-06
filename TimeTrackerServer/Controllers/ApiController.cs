@@ -12,6 +12,7 @@ namespace TimeTrackerServer.Controllers
 {
     public class ApiController : Controller
     {
+        [HttpPost]
         public ActionResult Login(LoginPara para)
         {
             WebResult result = new WebResult()
@@ -27,6 +28,7 @@ namespace TimeTrackerServer.Controllers
                 if (user.UserPwd.Equals(password))
                 {
                     result.Code = SystemConst.MsgSuccess;
+                    result.Message = user.UserID.ToString();
                 }
                 else
                 {

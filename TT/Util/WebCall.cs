@@ -13,7 +13,10 @@ namespace TT.Util
 {
     public class WebCall
     {
-        public static string BaseUrl = "http://localhost:56090/";
+        public static string BaseUrl = "http://localhost/api/";
+        //public static string BaseUrl = "http://localhost:55388/api/";
+
+        public static string Login = "Login";
 
         public static T GetMethod<T>(string methodName, List<KeyValuePair<string, string>> paramlist)
         {

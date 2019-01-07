@@ -41,16 +41,6 @@ namespace TT
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            //TimeService.Service ts = new TimeService.Service();
-            //int uid=ts.CheckPassword(txtUserName.Text.Trim(), txtPassword.Password);
-            //if (uid != -1)
-            //{
-            //    TimeRecorder.Username = txtUserName.Text.Trim();  //Save username.
-            //    TimeRecorder.UserID = uid;
-            //    this.Hide();
-            //    MenuWindow.getMain().Show();
-            //}
-            //else
             LoginPara para = new LoginPara()
             {
                 UserName = txtUserName.Text.Trim(),

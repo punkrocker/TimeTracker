@@ -7,6 +7,8 @@ using TT.Model;
 using System.Collections.Generic;
 using Tstring.DataBase;
 using System.Data;
+using Model;
+using Model.WebResult;
 using TimeTracker.Util;
 
 namespace TT
@@ -158,22 +160,33 @@ namespace TT
         {
             try
             {
-                TimeService.Service ts = new TimeService.Service();
+                List<KeyValuePair<string, string>> paramlist = new List<KeyValuePair<string, string>>();
+                paramlist.Add(new KeyValuePair<string, string>("userid", TimeRecorder.UserID.ToString()));
+                var userProjectResult = WebCall.GetMethod<UserProjectResult>(WebCall.GetProjects, paramlist);
 
-                DataSet ds = ts.GetProjects(TimeRecorder.UserID.ToString());
                 SqliteOper sp = new SqliteOper();
                 sp.ExecuteNonQuery("Delete From T_PM_Project");
-                if (ds != null && ds.Tables.Count != 0)
-                    foreach (DataRow dr in ds.Tables[0].Rows)
+                if (userProjectResult.Code == SystemConst.MsgSuccess)
+                    foreach (var userProject in userProjectResult.Data)
                     {
                         SqliteOper spi = new SqliteOper();
-                        spi.ExecuteNonQuery("Insert Into T_PM_Project (ProjectID,ProjectCode,ProjectName,CustomerID,[Status]) Values ('" + dr["ProjectID"].ToString() + "','" + dr["ProjectCode"].ToString() + "','" + dr["ProjectName"].ToString() + "','" + dr["CustomerID"].ToString() + "','1');");
-                        string sql = "Select count(1) as count From T_PM_USERTIME Where ProjectID = '" + dr["ProjectID"].ToString() + "' And UserID = '" + dr["UserID"].ToString() + "'";
+                        spi.ExecuteNonQuery(
+                            "Insert Into T_PM_Project (ProjectID,ProjectCode,ProjectName,CustomerID,[Status]) Values ('" +
+                            userProject.ProjectID + "','" + userProject.ProjectCode + "','" +
+                            userProject.ProjectCode + "','" + userProject.CustomerID + "','1');");
+                        string sql = "Select count(1) as count From T_PM_USERTIME Where ProjectID = '" +
+                                     userProject.ProjectID + "' And UserID = '" + TimeRecorder.UserID + "'";
                         if (spi.ExecuteDataSet(sql).Tables[0].Rows[0]["count"].ToString().Equals("0"))
                         {
-                            spi.ExecuteNonQuery("Insert Into T_PM_USERTIME (ProjectID,UserID,TaskTime) Values ('" + dr["ProjectID"].ToString() + "','" + dr["UserID"].ToString() + "','0')");
+                            spi.ExecuteNonQuery("Insert Into T_PM_USERTIME (ProjectID,UserID,TaskTime) Values ('" +
+                                                userProject.ProjectID + "','" + TimeRecorder.UserID +
+                                                "','0')");
                         }
                     }
+                else
+                {
+                    MessageBox.Show(userProjectResult.Message, "", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
             catch (Exception ex)
             {

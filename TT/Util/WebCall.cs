@@ -17,6 +17,7 @@ namespace TT.Util
         //public static string BaseUrl = "http://localhost:55388/api/";
 
         public static string Login = "Login";
+        public static string GetProjects = "GetProjects";
 
         public static T GetMethod<T>(string methodName, List<KeyValuePair<string, string>> paramlist)
         {

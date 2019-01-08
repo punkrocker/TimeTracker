@@ -9,6 +9,6 @@ namespace Model.Dto
     {
         public string CustomerName { get; set; }
         public int TeamId { get; set; }
-        public int TeamName { get; set; }
+        public string TeamName { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using Model.Dto;
 
 namespace Model.WebResult
 {
-    class CustomerTeamsResult :WebResult
+    public class CustomerTeamsResult :WebResult
     {
         public List<CustomerTeamsDto> Data { get; set; }
     }

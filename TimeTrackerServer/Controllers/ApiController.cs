@@ -7,6 +7,7 @@ using Model;
 using Model.Dto;
 using Model.WebResult;
 using Newtonsoft.Json;
+using WebGrease.Css.Ast.Selectors;
 
 namespace TimeTrackerServer.Controllers
 {
@@ -80,34 +81,30 @@ namespace TimeTrackerServer.Controllers
 
         public ActionResult GetCustomerTeams(int customerID)
         {
-            UserProjectResult result = new UserProjectResult()
+            CustomerTeamsResult result = new CustomerTeamsResult()
             {
                 Code = SystemConst.MsgErrUnknown,
                 Message = String.Empty,
                 Data = null
             };
-
             try
             {
                 using (var db = new TimeTrackerEntities())
                 {
-                    var user = db.T_Sys_UserInfo.Where(a => a.UserID == userID).FirstOrDefault();
-                    if (user == null || user.Status == SystemConst.StatusDisable)
-                        return Content(AppUtils.JsonSerializer(result));
-                    var usersProjects =
-                        (from projects in db.T_PM_Project.Where(a => a.Status == SystemConst.StatusIssued)
-                            join members in db.T_PM_Member on projects.ProjectID equals members.ProjectID
-                                into memberProjects
-                            from memberProject in memberProjects.DefaultIfEmpty().Where(a => a.UserID == userID)
-                            select new UserProjectsDto
-                            {
-                                ProjectId = projects.ProjectID,
-                                ProjectCode = projects.ProjectCode,
-                                ProjectName = projects.ProjectName,
-                                CustomerId = projects.CustomerID,
-                            }).ToList();
+                    var customerTeams = (from teams in db.T_SD_CustomerTeam.Where(a =>
+                            a.CustomerID == customerID && a.Status == SystemConst.StatusEnable)
+                        join customer in db.T_SD_Customer on teams.CustomerID equals customer.CustomerID
+                            into customerTeamInfos
+                        from customerTeamInfo in customerTeamInfos.DefaultIfEmpty().Where(a =>
+                            a.CustomerID == customerID && a.Status == SystemConst.StatusEnable)
+                        select new CustomerTeamsDto
+                        {
+                            CustomerName = customerTeamInfo.CustomerName,
+                            TeamId = teams.TeamID,
+                            TeamName = teams.TeamName
+                        }).ToList();
                     result.Code = SystemConst.MsgSuccess;
-                    result.Data = usersProjects;
+                    result.Data = customerTeams;
                 }
             }
             catch (Exception e)

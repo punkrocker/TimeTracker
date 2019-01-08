@@ -7,7 +7,7 @@ namespace Model
 {
     public class ReportInfo
     {
-        public int? ProjectID { get; set; }
+        public int? ProjectId { get; set; }
         public string ProjectName { get; set; }
         public int? TaskNum { get; set; }
         public int? RealTime { get; set; }

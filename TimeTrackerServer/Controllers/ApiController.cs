@@ -61,10 +61,10 @@ namespace TimeTrackerServer.Controllers
                             from memberProject in memberProjects.DefaultIfEmpty().Where(a => a.UserID == userID)
                             select new UserProjectsDto
                             {
-                                ProjectID = projects.ProjectID,
+                                ProjectId = projects.ProjectID,
                                 ProjectCode = projects.ProjectCode,
                                 ProjectName = projects.ProjectName,
-                                CustomerID = projects.CustomerID,
+                                CustomerId = projects.CustomerID,
                             }).ToList();
                     result.Code = SystemConst.MsgSuccess;
                     result.Data = usersProjects;
@@ -101,10 +101,10 @@ namespace TimeTrackerServer.Controllers
                             from memberProject in memberProjects.DefaultIfEmpty().Where(a => a.UserID == userID)
                             select new UserProjectsDto
                             {
-                                ProjectID = projects.ProjectID,
+                                ProjectId = projects.ProjectID,
                                 ProjectCode = projects.ProjectCode,
                                 ProjectName = projects.ProjectName,
-                                CustomerID = projects.CustomerID,
+                                CustomerId = projects.CustomerID,
                             }).ToList();
                     result.Code = SystemConst.MsgSuccess;
                     result.Data = usersProjects;

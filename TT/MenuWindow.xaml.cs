@@ -172,14 +172,14 @@ namespace TT
                         SqliteOper spi = new SqliteOper();
                         spi.ExecuteNonQuery(
                             "Insert Into T_PM_Project (ProjectID,ProjectCode,ProjectName,CustomerID,[Status]) Values ('" +
-                            userProject.ProjectID + "','" + userProject.ProjectCode + "','" +
-                            userProject.ProjectCode + "','" + userProject.CustomerID + "','1');");
+                            userProject.ProjectId + "','" + userProject.ProjectCode + "','" +
+                            userProject.ProjectCode + "','" + userProject.CustomerId + "','1');");
                         string sql = "Select count(1) as count From T_PM_USERTIME Where ProjectID = '" +
-                                     userProject.ProjectID + "' And UserID = '" + TimeRecorder.UserID + "'";
+                                     userProject.ProjectId + "' And UserID = '" + TimeRecorder.UserID + "'";
                         if (spi.ExecuteDataSet(sql).Tables[0].Rows[0]["count"].ToString().Equals("0"))
                         {
                             spi.ExecuteNonQuery("Insert Into T_PM_USERTIME (ProjectID,UserID,TaskTime) Values ('" +
-                                                userProject.ProjectID + "','" + TimeRecorder.UserID +
+                                                userProject.ProjectId + "','" + TimeRecorder.UserID +
                                                 "','0')");
                         }
                     }

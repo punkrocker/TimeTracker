@@ -48,7 +48,7 @@ namespace TimeTrackerServer.Services
                     where i.ProjectName != null
                     select new ReportInfo
                     {
-                        ProjectID = i.ProjectID,
+                        ProjectId = i.ProjectID,
                         ProjectName = i.ProjectName,
                         TaskNum = reportRecords.Sum(t => t.RealTask),
                         RealTime = reportRecords.Sum(t => t.TaskTime),
@@ -65,7 +65,7 @@ namespace TimeTrackerServer.Services
                     from lastInfo in tmp.DefaultIfEmpty()
                     select new ReportDisplayInfo
                     {
-                        ProjectID = currentInfo.ProjectID == null ? 0: currentInfo.ProjectID,
+                        ProjectId = currentInfo.ProjectId == null ? 0: currentInfo.ProjectId,
                         ProjectName = currentInfo.ProjectName == null ? string.Empty : currentInfo.ProjectName,
                         CurrentTask = currentInfo.TaskNum == null ? 0 : Convert.ToInt32(currentInfo.TaskNum),
                         CurrentTime = currentInfo.RealTime == null ? 0 : Convert.ToInt32(currentInfo.RealTime),

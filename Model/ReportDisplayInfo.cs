@@ -2,7 +2,7 @@
 {
     public class ReportDisplayInfo
     {
-        public int? ProjectID { get; set; }
+        public int? ProjectId { get; set; }
         public string ProjectName
         {
             get; set;

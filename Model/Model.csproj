@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppUtils.cs" />
+    <Compile Include="Dto\CustomerTeamsDto.cs" />
     <Compile Include="Dto\LoginPara.cs" />
     <Compile Include="Dto\UserProjectsDto.cs" />
     <Compile Include="Nums.cs">
@@ -130,6 +131,7 @@
     <Compile Include="T_Sys_UserInfo.cs">
       <DependentUpon>TimeTrackerDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="WebResult\CustomerTeamsResult.cs" />
     <Compile Include="WebResult\UserProjectResult.cs" />
     <Compile Include="WebResult\WebResult.cs" />
   </ItemGroup>

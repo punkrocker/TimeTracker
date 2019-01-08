@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Model.Dto;
 
 namespace Model.WebResult
 {
-    class CustomerTeamsResult
+    class CustomerTeamsResult :WebResult
     {
+        public List<CustomerTeamsDto> Data { get; set; }
     }
 }

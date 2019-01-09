@@ -18,6 +18,7 @@ namespace TT.Util
 
         public static string Login = "Login";
         public static string GetProjects = "GetProjects";
+        public static string GetCustomerTeams = "GetCustomerTeams";
 
         public static T GetMethod<T>(string methodName, List<KeyValuePair<string, string>> paramlist)
         {

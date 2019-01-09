@@ -13,6 +13,8 @@ using System.Windows.Shapes;
 using TT.Model;
 using Tstring.DataBase;
 using System.Data;
+using Model;
+using Model.WebResult;
 using TT.Util;
 using TimeTracker.Util;
 
@@ -85,16 +87,20 @@ namespace TT
         {
             ProjectTimeInfo prj = (gridProject.SelectedItem as ProjectTimeInfo);
             Dictionary<string, string> TeamList = new Dictionary<string, string>();
-            TimeService.Service ts = new TimeService.Service();
-            DataSet teams = ts.GetCustomerInfo(prj.customerid);
 
-            if (teams != null && teams.Tables.Count >= 2)
+            List<KeyValuePair<string, string>> paramlist = new List<KeyValuePair<string, string>>();
+            paramlist.Add(new KeyValuePair<string, string>("customerid", prj.customerid));
+            var customerTeamsResult = WebCall.GetMethod<CustomerTeamsResult>(WebCall.GetCustomerTeams, paramlist);
+
+            if (customerTeamsResult.Code==SystemConst.MsgSuccess)
             {
-                foreach (DataRow dr in teams.Tables[1].Rows)
+                foreach (var customerTeam in customerTeamsResult.Data)
                 {
-                    CustomerTeam ct = new CustomerTeam();
-                    ct.teamid = Convert.ToInt16(dr["teamid"]);
-                    ct.teamname = dr["teamname"].ToString();
+                    CustomerTeam ct = new CustomerTeam()
+                    {
+                        teamid = customerTeam.TeamId,
+                        teamname = customerTeam.TeamName
+                    };
                     TeamList.Add(ct.teamid.ToString(), ct.teamname);
                 }
             }

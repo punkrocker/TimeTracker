@@ -14,6 +14,8 @@ using TT.Model;
 using TT.Util;
 using TimeTracker.Util;
 using System.Data;
+using Model;
+using Model.WebResult;
 using Tstring.DataBase;
 
 namespace TT
@@ -33,8 +35,6 @@ namespace TT
             set
             {
                 txtTimeLeft.Text = value.ToString();
-                //SliderTimeLeft.Maximum = value;
-                //lblMax.Content = value.ToString();
             }
         }
         public ResolveProject(ProjectTimeInfo _prj)
@@ -53,18 +53,21 @@ namespace TT
             this.TimeLeft = prj.tasktime;
             lblCustomer.Content = ConfigFile.Languege.ReadValue("lblCustomer");
 
-            TimeService.Service ts = new TimeService.Service();
-            DataSet ds = ts.GetCustomerInfo(prj.customerid);
+            List<KeyValuePair<string, string>> paramlist = new List<KeyValuePair<string, string>>();
+            paramlist.Add(new KeyValuePair<string, string>("customerid", prj.customerid));
+            var customerTeamsResult = WebCall.GetMethod<CustomerTeamsResult>(WebCall.GetCustomerTeams, paramlist);
 
-            if (ds != null && ds.Tables.Count >= 2)
+            if (customerTeamsResult.Code==SystemConst.MsgSuccess)
             {
-                txtCustomer.Text = ds.Tables[0].Rows[0]["CustomerName"].ToString();
-
-                foreach (DataRow dr in ds.Tables[1].Rows)
+                foreach (var customerTeamsDto in customerTeamsResult.Data)
                 {
-                    CustomerTeam ct = new CustomerTeam();
-                    ct.teamid = Convert.ToInt16(dr["teamid"]);
-                    ct.teamname = dr["teamname"].ToString();
+                    txtCustomer.Text = customerTeamsDto.CustomerName;
+
+                    CustomerTeam ct = new CustomerTeam
+                    {
+                        teamid = customerTeamsDto.TeamId,
+                        teamname = customerTeamsDto.TeamName
+                    };
                     cbxTeam.Items.Add(ct);
                     TeamList.Add(ct.teamid.ToString(), ct.teamname);
                     cbxTeam.SelectedIndex = 0;

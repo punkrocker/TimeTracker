@@ -57,6 +57,7 @@ namespace TimeTrackerServer.Controllers
                         return Content(AppUtils.JsonSerializer(result));
                     var usersProjects =
                         (from projects in db.T_PM_Project.Where(a => a.Status == SystemConst.StatusIssued)
+                         join customer in db.T_SD_Customer.Where(a=>a.Status==SystemConst.StatusEnable) on projects.CustomerID equals customer.CustomerID
                             join members in db.T_PM_Member on projects.ProjectID equals members.ProjectID
                                 into memberProjects
                             from memberProject in memberProjects.DefaultIfEmpty().Where(a => a.UserID == userID)

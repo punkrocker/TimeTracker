@@ -9,7 +9,7 @@ namespace Model.Dto
     {
         public int ProjectId { get; set; }
         public int UserId { get; set; }
-        public string TaskDate { get; set; }
+        public DateTime TaskDate { get; set; }
         public int TeamId { get; set; }
         public int PlanTask { get; set; }
         public int RealTask { get; set; }

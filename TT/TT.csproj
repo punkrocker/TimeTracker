@@ -79,11 +79,6 @@
     <Compile Include="Util\SqliteOper.cs" />
     <Compile Include="Util\TimeRecorder.cs" />
     <Compile Include="Util\WebCall.cs" />
-    <Compile Include="Web References\TimeService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.map</DependentUpon>
-    </Compile>
     <Compile Include="XmlConfig.cs" />
     <Page Include="FinishDay.xaml">
       <SubType>Designer</SubType>
@@ -142,11 +137,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Web References\TimeService\Reference.map">
-      <Generator>MSDiscoCodeGenerator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Web References\TimeService\Service.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <WebReferences Include="Web References\" />
@@ -162,22 +152,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Splash.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <WebReferenceUrl Include="http://localhost:8099/Service.asmx">
-      <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\TimeService\</RelPath>
-      <UpdateFromURL>http://localhost:8099/Service.asmx</UpdateFromURL>
-      <ServiceLocationURL>
-      </ServiceLocationURL>
-      <CachedDynamicPropName>
-      </CachedDynamicPropName>
-      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
-      <CachedSettingsPropName>TT_TimeService_Service</CachedSettingsPropName>
-    </WebReferenceUrl>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Web References\TimeService\Service.disco" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\controlbutton.png" />

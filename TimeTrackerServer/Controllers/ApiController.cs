@@ -127,7 +127,7 @@ namespace TimeTrackerServer.Controllers
         }
 
         [HttpPost]
-        public ActionResult CommitProjects()
+        public ActionResult CommitProjects(List<CommitTask> commitTasks)
         {
             WebResult result = new WebResult()
             {
@@ -139,6 +139,14 @@ namespace TimeTrackerServer.Controllers
             {
                 using (var db = new TimeTrackerEntities())
                 {
+                    foreach (var commitTask in commitTasks)
+                    {
+                        var max = db.T_PM_Task.Where(a => a.ProjectID == commitTask.ProjectId &&
+                                                a.UserID == commitTask.UserId &&
+                                                a.TaskDate == commitTask.TaskDate &&
+                                                a.TeamID == commitTask.TeamId).Max(a => a.SubmitSeq);
+                        max = max + 1;
+                    }
                 }
             }
             catch (Exception ex)

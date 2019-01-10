@@ -13,8 +13,8 @@ namespace TT.Util
 {
     public class WebCall
     {
-        public static string BaseUrl = "http://localhost/api/";
-        //public static string BaseUrl = "http://localhost:55388/api/";
+        //public static string BaseUrl = "http://localhost/api/";
+        public static string BaseUrl = "http://localhost:55388/api/";
 
         public static string Login = "Login";
         public static string GetProjects = "GetProjects";

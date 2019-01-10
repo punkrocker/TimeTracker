@@ -143,20 +143,23 @@ namespace TT
             }
 
             DataSet result = sq.ExecuteDataSet("Select ProjectID,UserID,TaskDate,SubmitSeq,TeamID,PlanTask,RealTask,TaskTime,[Desc],SubmitTime From T_PM_Task Where UserID = '" + TimeRecorder.UserID + "' And [Status] = '" + AppConst.Comfirmed + "'");
-            TimeService.Service ts = new TimeService.Service();
-            string upResult=ts.CommitProject(result);
-            if (upResult.Equals("SUCCESS"))
+            if (result != null && result.Tables.Count != 0)
             {
-                SqliteOper sp = new SqliteOper();
-                sp.ExecuteNonQuery("Update T_PM_Task set Status = '" + AppConst.Uploaded + "' Where  UserID = '" + TimeRecorder.UserID + "' And Status = '" + AppConst.Comfirmed + "';Update T_PM_UserTime Set Status = '" + AppConst.Finished + "' Where UserID = '" + TimeRecorder.UserID + "' And Status = '" + AppConst.Resolved + "';Update T_PM_Project Set Status = '" + AppConst.Finished + "' Where Status = '" + AppConst.Executing + "'");
-                MessageBox.Show(ConfigFile.Languege.ReadValue("UploadSuccess"), "", MessageBoxButton.OK, MessageBoxImage.None);
-                sp.ExecuteNonQuery("Delete From T_PM_Task Where Status = '" + AppConst.Uploaded + "';Delete From T_PM_UserTime Where Status = '" + AppConst.Finished + "'");
-                MenuWindow.getMain().RefreshGrid();
-                TimeRecorder.getRecorder().RecordingProject = null;
-                this.Hide();
             }
-            else
-                MessageBox.Show(upResult, "", MessageBoxButton.OK, MessageBoxImage.Error);
+            //TimeService.Service ts = new TimeService.Service();
+            //string upResult=ts.CommitProject(result);
+            //if (upResult.Equals("SUCCESS"))
+            //{
+            //    SqliteOper sp = new SqliteOper();
+            //    sp.ExecuteNonQuery("Update T_PM_Task set Status = '" + AppConst.Uploaded + "' Where  UserID = '" + TimeRecorder.UserID + "' And Status = '" + AppConst.Comfirmed + "';Update T_PM_UserTime Set Status = '" + AppConst.Finished + "' Where UserID = '" + TimeRecorder.UserID + "' And Status = '" + AppConst.Resolved + "';Update T_PM_Project Set Status = '" + AppConst.Finished + "' Where Status = '" + AppConst.Executing + "'");
+            //    MessageBox.Show(ConfigFile.Languege.ReadValue("UploadSuccess"), "", MessageBoxButton.OK, MessageBoxImage.None);
+            //    sp.ExecuteNonQuery("Delete From T_PM_Task Where Status = '" + AppConst.Uploaded + "';Delete From T_PM_UserTime Where Status = '" + AppConst.Finished + "'");
+            //    MenuWindow.getMain().RefreshGrid();
+            //    TimeRecorder.getRecorder().RecordingProject = null;
+            //    this.Hide();
+            //}
+            //else
+            //    MessageBox.Show(upResult, "", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }

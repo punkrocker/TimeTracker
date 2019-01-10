@@ -164,6 +164,7 @@ namespace TimeTrackerServer.Controllers
                         db.T_PM_Task.Add(test);
                     }
                     db.SaveChanges();
+                    result.Code = SystemConst.MsgSuccess;
                 }
             }
             catch (Exception ex)

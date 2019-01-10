@@ -22,20 +22,30 @@ namespace TimeTrackerServer.Controllers
                 Message = String.Empty
             };
 
-            using (var db = new TimeTrackerEntities())
+            try
             {
-                var password = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(para.Password, "MD5");
-                var user = db.T_Sys_UserInfo.Where(a => a.UseName.Equals(para.UserName)).FirstOrDefault();
-                if (user.UserPwd.Equals(password))
+                using (var db = new TimeTrackerEntities())
                 {
-                    result.Code = SystemConst.MsgSuccess;
-                    result.Message = user.UserID.ToString();
-                }
-                else
-                {
-                    result.Message = "ERR_PWD";
+                    var password =
+                        System.Web.Security.FormsAuthentication
+                            .HashPasswordForStoringInConfigFile(para.Password, "MD5");
+                    var user = db.T_Sys_UserInfo.Where(a => a.UseName.Equals(para.UserName)).FirstOrDefault();
+                    if (user.UserPwd.Equals(password))
+                    {
+                        result.Code = SystemConst.MsgSuccess;
+                        result.Message = user.UserID.ToString();
+                    }
+                    else
+                    {
+                        result.Message = "ERR_PWD";
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+
             return Content(AppUtils.JsonSerializer(result));
         }
 
@@ -113,6 +123,21 @@ namespace TimeTrackerServer.Controllers
                 result.Message = e.Message;
             }
 
+            return Content(AppUtils.JsonSerializer(result));
+        }
+
+        [HttpPost]
+        public ActionResult CommitProjects()
+        {
+            WebResult result = new WebResult()
+            {
+                Code = SystemConst.MsgErrUnknown,
+                Message = String.Empty
+            };
+
+            using (var db = new TimeTrackerEntities())
+            {
+            }
             return Content(AppUtils.JsonSerializer(result));
         }
     }

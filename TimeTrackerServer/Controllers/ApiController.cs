@@ -142,12 +142,28 @@ namespace TimeTrackerServer.Controllers
                     foreach (var commitTask in commitTasks)
                     {
                         var max = db.T_PM_Task.Where(a => a.ProjectID == commitTask.ProjectId &&
-                                                a.UserID == commitTask.UserId &&
-                                                a.TaskDate == commitTask.TaskDate &&
-                                                a.TeamID == commitTask.TeamId).
-                                      Select(a=>a.SubmitSeq).
-                                      DefaultIfEmpty().Max() + 1;
+                                                          a.UserID == commitTask.UserId &&
+                                                          a.TaskDate == commitTask.TaskDate &&
+                                                          a.TeamID == commitTask.TeamId).Select(a => a.SubmitSeq)
+                                      .DefaultIfEmpty().Max() + 1;
+
+                        T_PM_Task test = new T_PM_Task
+                        {
+                            ProjectID = commitTask.ProjectId,
+                            UserID = commitTask.UserId,
+                            TaskDate = commitTask.TaskDate,
+                            SubmitSeq = max,
+                            TeamID = commitTask.TeamId,
+                            PlanTask = Convert.ToInt32(commitTask.PlanTask),
+                            RealTask = Convert.ToInt32(commitTask.RealTask),
+                            TaskTime = Convert.ToInt32(commitTask.TaskTime),
+                            Desc = commitTask.Desc == null ? string.Empty : commitTask.Desc,
+                            SubmitTime = commitTask.SubmitTime,
+                            ReportTime = Convert.ToInt32(commitTask.TaskTime),
+                        };
+                        db.T_PM_Task.Add(test);
                     }
+                    db.SaveChanges();
                 }
             }
             catch (Exception ex)

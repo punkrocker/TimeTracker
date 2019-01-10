@@ -144,8 +144,9 @@ namespace TimeTrackerServer.Controllers
                         var max = db.T_PM_Task.Where(a => a.ProjectID == commitTask.ProjectId &&
                                                 a.UserID == commitTask.UserId &&
                                                 a.TaskDate == commitTask.TaskDate &&
-                                                a.TeamID == commitTask.TeamId).Max(a => a.SubmitSeq);
-                        max = max + 1;
+                                                a.TeamID == commitTask.TeamId).
+                                      Select(a=>a.SubmitSeq).
+                                      DefaultIfEmpty().Max() + 1;
                     }
                 }
             }

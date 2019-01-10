@@ -14,6 +14,7 @@ using TT.Model;
 using Tstring.DataBase;
 using System.Data;
 using Model;
+using Model.Dto;
 using Model.WebResult;
 using TT.Util;
 using TimeTracker.Util;
@@ -145,6 +146,24 @@ namespace TT
             DataSet result = sq.ExecuteDataSet("Select ProjectID,UserID,TaskDate,SubmitSeq,TeamID,PlanTask,RealTask,TaskTime,[Desc],SubmitTime From T_PM_Task Where UserID = '" + TimeRecorder.UserID + "' And [Status] = '" + AppConst.Comfirmed + "'");
             if (result != null && result.Tables.Count != 0)
             {
+                List<CommitTask> commitTasks = new List<CommitTask>();
+                foreach (DataRow dr in result.Tables[0].Rows)
+                {
+                    CommitTask commitTask = new CommitTask
+                    {
+                        ProjectId = Convert.ToInt32(dr["ProjectID"]),
+                        UserId = Convert.ToInt32(dr["UserID"]),
+                        TaskDate = Convert.ToDateTime(dr["TaskDate"]),
+                        TeamId = Convert.ToInt32(dr["TeamID"]),
+                        PlanTask = Convert.ToUInt32(dr["PlanTask"]),
+                        RealTask = Convert.ToUInt32(dr["RealTask"]),
+                        TaskTime = Convert.ToUInt64(dr["TaskTime"]),
+                        Desc = dr["Desc"].ToString(),
+                        SubmitTime = Convert.ToDateTime(dr["SubmitTime"])
+                    };
+                    commitTasks.Add(commitTask);
+                }
+                string str_result = WebCall.PostMethod<List<CommitTask>>(WebCall.CommitProjects, commitTasks);
             }
             //TimeService.Service ts = new TimeService.Service();
             //string upResult=ts.CommitProject(result);

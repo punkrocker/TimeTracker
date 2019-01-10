@@ -11,9 +11,10 @@ namespace Model.Dto
         public int UserId { get; set; }
         public DateTime TaskDate { get; set; }
         public int TeamId { get; set; }
-        public int PlanTask { get; set; }
-        public int RealTask { get; set; }
-        public int TaskTime { get; set; }
+        public UInt32 PlanTask { get; set; }
+        public UInt32 RealTask { get; set; }
+        public UInt64 TaskTime { get; set; }
         public DateTime SubmitTime { get; set; }
+        public string Desc { get; set; }
     }
 }

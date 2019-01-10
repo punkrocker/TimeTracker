@@ -135,9 +135,17 @@ namespace TimeTrackerServer.Controllers
                 Message = String.Empty
             };
 
-            using (var db = new TimeTrackerEntities())
+            try
             {
+                using (var db = new TimeTrackerEntities())
+                {
+                }
             }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+
             return Content(AppUtils.JsonSerializer(result));
         }
     }

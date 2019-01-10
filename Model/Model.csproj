@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppUtils.cs" />
+    <Compile Include="Dto\CommitTask.cs" />
     <Compile Include="Dto\CustomerTeamsDto.cs" />
     <Compile Include="Dto\LoginPara.cs" />
     <Compile Include="Dto\UserProjectsDto.cs" />

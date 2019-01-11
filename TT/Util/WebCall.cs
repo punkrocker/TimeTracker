@@ -28,14 +28,7 @@ namespace TT.Util
             {
                 for (var index = 0; index < paramlist.Count; index++)
                 {
-                    if (index == 0)
-                    {
-                        param.Append("?");
-                    }
-                    else
-                    {
-                        param.Append("&");
-                    }
+                    param.Append(index == 0 ? "?" : "&");
 
                     param.Append(paramlist[index].Key);
                     param.Append("=");

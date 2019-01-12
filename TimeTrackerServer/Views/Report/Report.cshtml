@@ -42,6 +42,10 @@
                 <div id="time" style="height:800px;">
                 </div>
                 <div class="text-center">
+                    @if (@ViewBag.comment.ToString().Trim().Equals(string.Empty))
+                    {
+                        <p>Comment</p>
+                    }
                     <p>@ViewBag.comment</p>
                 </div>
             </div>

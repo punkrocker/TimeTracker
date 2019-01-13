@@ -29,14 +29,12 @@ namespace TimeTrackerServer.Services
                         ProjectName = i.ProjectName,
                         TaskNum = reportRecords.Sum(t => t.RealTask),
                         RealTime = reportRecords.Sum(t => t.TaskTime),
-                        RealAvg = reportRecords.Sum(t => t.RealTask) == 0
-                            ? 0
-                            : reportRecords.Sum(t => t.TaskTime) / reportRecords.Sum(t => t.RealTask),
                         ModifyTime = reportRecords.Sum(t => t.ReportTime),
-                        ModifyAvg = reportRecords.Sum(t => t.RealTask) == 0
-                            ? 0
-                            : reportRecords.Sum(t => t.ReportTime) / reportRecords.Sum(t => t.RealTask)
                     }).ToList();
+                reportInfos.ForEach(a =>
+                    a.ModifyAvg = a.TaskNum == 0
+                        ? 0
+                        : Math.Round(Convert.ToDouble(a.ModifyTime) / Convert.ToDouble(a.TaskNum), 2));
                 var currentInfos = (from reportRecords in db.T_PM_Task
                         .Where(a => a.TaskDate.Year == today.Year && a.TaskDate.Month == today.Month)
                         .GroupBy(a => a.ProjectID)
@@ -52,14 +50,12 @@ namespace TimeTrackerServer.Services
                         ProjectName = i.ProjectName,
                         TaskNum = reportRecords.Sum(t => t.RealTask),
                         RealTime = reportRecords.Sum(t => t.TaskTime),
-                        RealAvg = reportRecords.Sum(t => t.RealTask) == 0
-                            ? 0
-                            : reportRecords.Sum(t => t.TaskTime) / reportRecords.Sum(t => t.RealTask),
                         ModifyTime = reportRecords.Sum(t => t.ReportTime),
-                        ModifyAvg = reportRecords.Sum(t => t.RealTask) == 0
-                            ? 0
-                            : reportRecords.Sum(t => t.ReportTime) / reportRecords.Sum(t => t.RealTask)
                     }).ToList();
+                currentInfos.ForEach(a =>
+                    a.ModifyAvg = a.TaskNum == 0
+                        ? 0
+                        : Math.Round(Convert.ToDouble(a.ModifyTime) / Convert.ToDouble(a.TaskNum), 2));
                 var result = (from currentInfo in currentInfos
                     join reportInfo in reportInfos on currentInfo.ProjectName equals reportInfo.ProjectName into tmp
                     from lastInfo in tmp.DefaultIfEmpty()
@@ -70,7 +66,7 @@ namespace TimeTrackerServer.Services
                         CurrentTask = currentInfo.TaskNum == null ? 0 : Convert.ToInt32(currentInfo.TaskNum),
                         CurrentTime = currentInfo.RealTime == null ? 0 : Convert.ToInt32(currentInfo.RealTime),
                         CurrentModify = currentInfo.ModifyTime == null ? 0 : Convert.ToInt32(currentInfo.ModifyTime),
-                        CurrentAvg = currentInfo.ModifyAvg == null ? 0 : Convert.ToInt32(currentInfo.ModifyAvg),
+                        CurrentAvg = currentInfo.ModifyAvg == null ? 0 : currentInfo.ModifyAvg,
                         LastTask = lastInfo == null || null == lastInfo.TaskNum ? 0 : Convert.ToInt32(lastInfo.TaskNum),
                         LastTime = lastInfo == null || null == lastInfo.RealTime
                             ? 0
@@ -80,7 +76,7 @@ namespace TimeTrackerServer.Services
                             : Convert.ToInt32(lastInfo.ModifyTime),
                         LastAvg = lastInfo == null || null == lastInfo.ModifyAvg
                             ? 0
-                            : Convert.ToInt32(lastInfo.ModifyAvg),
+                            : lastInfo.ModifyAvg,
                     }).ToList();
                 return result;
             }

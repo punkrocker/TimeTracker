@@ -12,7 +12,7 @@ namespace Model
         public int? TaskNum { get; set; }
         public int? RealTime { get; set; }
         public int? ModifyTime { get; set; }
-        public int? RealAvg { get; set; }
-        public int? ModifyAvg { get; set; }
+        public double RealAvg { get; set; }
+        public double ModifyAvg { get; set; }
     }
 }

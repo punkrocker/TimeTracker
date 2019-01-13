@@ -14,7 +14,7 @@
         public int LastTime { get; set; }
         public int CurrentModify { get; set; }
         public int LastModify { get; set; }
-        public int CurrentAvg { get; set; }
-        public int LastAvg { get; set; }
+        public double CurrentAvg { get; set; }
+        public double LastAvg { get; set; }
     }
 }

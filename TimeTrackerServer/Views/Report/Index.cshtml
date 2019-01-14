@@ -36,7 +36,7 @@
                         <option></option>
                         @foreach (var customer in ViewBag.Customers)
                         {
-                            var select_value = Request.QueryString["CustomerID"] != null && Request.QueryString["CustomerID"].Equals(customer.CustomerID);
+                            var select_value = Request.QueryString["CustomerID"] != null && Request.QueryString["CustomerID"].Equals(customer.CustomerID.ToString());
                             if (select_value)
                             {
                                 <option value="@customer.CustomerID" selected="selected">
@@ -62,7 +62,7 @@
                     <div class="caption">
                         <span>Select Month</span>
                     </div>
-                    <input id="report_month" name="report_month" type="text" class="form-control" value="" placeholder="Please Select Report Month" />
+                        <input id="report_month" name="report_month" type="text" class="form-control" value="@Request.QueryString["reportDate"]" placeholder="Please Select Report Month"/>
                 </div>
             </div>
         </div>
@@ -251,13 +251,13 @@
     $(document).ready(function(){
         reportList = @Html.Raw(Json.Encode(ViewBag.Model));
 
-        if (GetQueryString("customerID") != null) {
-            $("#single").val(GetQueryString("customerID"));
-        }
+        //if (GetQueryString("customerID") != null) {
+        //    $("#single").val(GetQueryString("customerID"));
+        //}
 
-        if (GetQueryString("reportDate") != null) {
-            document.getElementById("report_month").value = GetQueryString("reportDate");
-        }
+        //if (GetQueryString("reportDate") != null) {
+        //    document.getElementById("report_month").value = GetQueryString("reportDate");
+        //}
     });
 
     function DatePicker(beginSelector) {

@@ -2,6 +2,11 @@
     ViewBag.Title = "title";
 }
 
+@section scripts{
+    <script src="~/Content/global/plugins/jquery.min.js" type="text/javascript"></script>
+    <script src="~/Content/js/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
+}
+
 <div class="page-bar">
     <ul class="page-breadcrumb">
         <li>
@@ -46,12 +51,7 @@
                     <div class="caption">
                         <span>Select Month</span>
                     </div>
-                    <input type="text" class="form-control glyphicon-search" readonly="">
-                    <span class="input-group-btn">
-                        <button class="btn default" type="button">
-                            <i class="fa fa-calendar"></i>
-                        </button>
-                    </span>
+                    <input id="report_month" name="report_month" type="text" class="form-control" value="" placeholder="Please Select Report Month" />
                 </div>
             </div>
         </div>
@@ -235,4 +235,21 @@
         reportList = @Html.Raw(Json.Encode(ViewBag.Model));
     });
 
-    </script>
+    function DatePicker(beginSelector) {
+        // 仅选择日期
+        $(beginSelector).datepicker(
+            {
+                autoclose: true,
+                startView: 0,
+                format: "yyyy-mm",
+                clearBtn: true,
+                todayBtn: false,
+            }).on('changeDate',
+            function (ev) {
+                var select_month = $(beginSelector).val();
+            });
+    }
+
+    DatePicker("#report_month");
+
+</script>

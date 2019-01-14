@@ -12,10 +12,10 @@ namespace TimeTrackerServer.Controllers
     public class ReportController : Controller
     {
         // GET: Report
-        public ActionResult Index(int? customerID)
+        public ActionResult Index(int? customerId, string reportDate)
         {
             ReportService reportService = new ReportService();
-            ViewBag.model = reportService.GetRerportDisplayInfos(customerID);
+            ViewBag.model = reportService.GetReportDisplayInfos(customerId, reportDate);
             ViewBag.customers = CustomerService.GetAllCustomers();
             return View();
         }

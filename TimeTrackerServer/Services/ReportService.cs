@@ -7,18 +7,20 @@ namespace TimeTrackerServer.Services
 {
     public class ReportService
     {
-        public IList<ReportDisplayInfo> GetRerportDisplayInfos(int? customerID)
+        public IList<ReportDisplayInfo> GetReportDisplayInfos(int? customerId, string reportDate)
         {
-            if (customerID == null)
+            if (customerId == null)
                 return new List<ReportDisplayInfo>();
             using (var db = new TimeTrackerEntities())
             {
-                DateTime today = DateTime.Now;
-                DateTime lastMonth = DateTime.Now.AddMonths(-1);
+                DateTime reportMonth = reportDate == null || reportDate.Equals(string.Empty)
+                    ? DateTime.Now
+                    : Convert.ToDateTime(reportDate);
+                DateTime lastMonth = reportMonth.AddMonths(-1);
                 var reportInfos = (from reportRecords in db.T_PM_Task
                         .Where(a => a.TaskDate.Year == lastMonth.Year && a.TaskDate.Month == lastMonth.Month)
                         .GroupBy(a => a.ProjectID)
-                    join project in db.T_PM_Project.Where(a => a.CustomerID == customerID) on reportRecords.Key equals
+                    join project in db.T_PM_Project.Where(a => a.CustomerID == customerId) on reportRecords.Key equals
                         project
                             .ProjectID
                         into pro
@@ -36,9 +38,9 @@ namespace TimeTrackerServer.Services
                         ? 0
                         : Math.Round(Convert.ToDouble(a.ModifyTime) / Convert.ToDouble(a.TaskNum), 2));
                 var currentInfos = (from reportRecords in db.T_PM_Task
-                        .Where(a => a.TaskDate.Year == today.Year && a.TaskDate.Month == today.Month)
+                        .Where(a => a.TaskDate.Year == reportMonth.Year && a.TaskDate.Month == reportMonth.Month)
                         .GroupBy(a => a.ProjectID)
-                    join project in db.T_PM_Project.Where(a => a.CustomerID == customerID) on reportRecords.Key equals
+                    join project in db.T_PM_Project.Where(a => a.CustomerID == customerId) on reportRecords.Key equals
                         project
                             .ProjectID
                         into pro
@@ -61,7 +63,7 @@ namespace TimeTrackerServer.Services
                     from lastInfo in tmp.DefaultIfEmpty()
                     select new ReportDisplayInfo
                     {
-                        ProjectId = currentInfo.ProjectId == null ? 0: currentInfo.ProjectId,
+                        ProjectId = currentInfo.ProjectId == null ? 0 : currentInfo.ProjectId,
                         ProjectName = currentInfo.ProjectName == null ? string.Empty : currentInfo.ProjectName,
                         CurrentTask = currentInfo.TaskNum == null ? 0 : Convert.ToInt32(currentInfo.TaskNum),
                         CurrentTime = currentInfo.RealTime == null ? 0 : Convert.ToInt32(currentInfo.RealTime),

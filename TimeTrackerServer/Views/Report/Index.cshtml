@@ -36,9 +36,20 @@
                         <option></option>
                         @foreach (var customer in ViewBag.Customers)
                         {
-                            <option value="@customer.CustomerID">
-                                @customer.CustomerName
-                            </option>
+                            var select_value = Request.QueryString["CustomerID"] != null && Request.QueryString["CustomerID"].Equals(customer.CustomerID);
+                            if (select_value)
+                            {
+                                <option value="@customer.CustomerID" selected="selected">
+                                    @customer.CustomerName
+                                </option>
+                            }
+                            else
+                            {
+                                <option value="@customer.CustomerID">
+                                    @customer.CustomerName
+                                </option>
+                            }
+                           
                         }
                     </select>
                 </div>
@@ -175,6 +186,12 @@
 <script>
     reportList = [];
 
+    function GetQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+
     function edittime(projectID) {
         var id = '#' + projectID;
         var td = $(id);
@@ -233,6 +250,14 @@
 
     $(document).ready(function(){
         reportList = @Html.Raw(Json.Encode(ViewBag.Model));
+
+        if (GetQueryString("customerID") != null) {
+            $("#single").val(GetQueryString("customerID"));
+        }
+
+        if (GetQueryString("reportDate") != null) {
+            document.getElementById("report_month").value = GetQueryString("reportDate");
+        }
     });
 
     function DatePicker(beginSelector) {
@@ -247,9 +272,12 @@
             }).on('changeDate',
             function (ev) {
                 var select_month = $(beginSelector).val();
+                var customer_id = GetQueryString("customerID");
+                window.location.href = "/Report/Index?customerId=" + customer_id + "&reportDate=" + select_month;
             });
     }
 
     DatePicker("#report_month");
+    
 
 </script>

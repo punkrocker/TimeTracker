@@ -36,7 +36,7 @@
                         <option></option>
                         @foreach (var customer in ViewBag.Customers)
                         {
-                            var select_value = Request.QueryString["CustomerID"] != null && Request.QueryString["CustomerID"].Equals(customer.CustomerID.ToString());
+                            var select_value = Request.QueryString["CustomerId"] != null && Request.QueryString["CustomerId"].Equals(customer.CustomerID.ToString());
                             if (select_value)
                             {
                                 <option value="@customer.CustomerID" selected="selected">
@@ -62,7 +62,7 @@
                     <div class="caption">
                         <span>Select Month</span>
                     </div>
-                        <input id="report_month" name="report_month" type="text" class="form-control" value="@Request.QueryString["reportDate"]" placeholder="Please Select Report Month"/>
+                    <input id="report_month" name="report_month" type="text" class="form-control" value="@Request.QueryString["reportDate"]" placeholder="Please Select Report Month" />
                 </div>
             </div>
         </div>
@@ -220,6 +220,7 @@
                 type: "post",
                 data: { projectID: projectID, modifyTime: more },
                 success: function (date) {
+                    window.location.href = window.location.href;
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     window.location.href = window.location.href;
@@ -245,7 +246,7 @@
     }
 
     function changeCustomer(v) {
-        window.location.href = "/Report/Index?customerID=" + v;
+        window.location.href = "/Report/Index?customerId=" + v;
     }
 
     $(document).ready(function(){
@@ -272,7 +273,7 @@
             }).on('changeDate',
             function (ev) {
                 var select_month = $(beginSelector).val();
-                var customer_id = GetQueryString("customerID");
+                var customer_id = GetQueryString("customerId");
                 window.location.href = "/Report/Index?customerId=" + customer_id + "&reportDate=" + select_month;
             });
     }

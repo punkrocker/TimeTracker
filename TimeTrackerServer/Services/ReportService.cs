@@ -101,7 +101,7 @@ namespace TimeTrackerServer.Services
                     if (allProjectTasks[index].RealTask == null)
                         continue;
                     int taskNum = Convert.ToInt32(allProjectTasks[index].RealTask);
-                    if (changeTime != taskNum)
+                    if (Math.Abs(changeTime) > taskNum)
                     {
                         allProjectTasks[index].ReportTime += (taskNum * posNeg);
                         changeTime -= taskNum * posNeg;

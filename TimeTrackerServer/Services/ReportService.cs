@@ -108,7 +108,7 @@ namespace TimeTrackerServer.Services
                     }
                     else
                     {
-                        allProjectTasks[index].ReportTime += (changeTime * posNeg);
+                        allProjectTasks[index].ReportTime += changeTime;
                         break;
                     }
 

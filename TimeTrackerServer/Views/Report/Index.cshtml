@@ -172,7 +172,7 @@
     </div>
 
     <div class="col-md-12">
-        <textarea rows="8" id="comment" name="comment" placeholder="Write comment here ..." class="form-control input-md"></textarea>
+        <textarea rows="8" id="comment" name="comment" wrap="hard" placeholder="Write comment here ..." class="form-control input-md"></textarea>
         <div>
             <p>1、Only display your team data</p>
             <p>2、Project Summary displays each project number</p>
@@ -237,7 +237,7 @@
         $.ajax({
             url : "Report",
             type: "post",
-            data: { reportList: reportList, comment: JSON.stringify(comment) },
+            data: { reportList: reportList, comment: comment },
             success: function (date) {
                 var obj = window.open("about:blank");
                 obj.document.write(date);
@@ -251,14 +251,6 @@
 
     $(document).ready(function(){
         reportList = @Html.Raw(Json.Encode(ViewBag.Model));
-
-        //if (GetQueryString("customerID") != null) {
-        //    $("#single").val(GetQueryString("customerID"));
-        //}
-
-        //if (GetQueryString("reportDate") != null) {
-        //    document.getElementById("report_month").value = GetQueryString("reportDate");
-        //}
     });
 
     function DatePicker(beginSelector) {

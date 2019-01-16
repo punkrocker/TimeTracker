@@ -42,7 +42,7 @@ namespace TimeTrackerServer.Controllers
             ViewBag.currentTasks = currentTasks;
             ViewBag.lastTimes = lastTimes;
             ViewBag.currentTimes = currentTimes;
-            ViewBag.comment = JsonConvert.DeserializeObject<string>(comment);
+            ViewBag.comment = comment;
             return View();
         }
 

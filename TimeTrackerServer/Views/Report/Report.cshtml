@@ -41,17 +41,18 @@
                 </div>
                 <div id="time" style="height:800px;">
                 </div>
-                <div>
+                <div >
                     @if (!ViewBag.comment.ToString().Trim().Equals(string.Empty))
                     {
                         <p><h4><b>Comment:</b></h4></p>
                         var comments = ViewBag.comment.Split('\n');
                         foreach (var comm in comments)
                         {
-                            <span>@comm</span><br />
+                            <span style="margin: 15px">@comm</span><br />
                         }
                     }
                 </div>
+                <br/>
             </div>
         </div>
 

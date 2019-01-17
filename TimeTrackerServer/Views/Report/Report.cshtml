@@ -246,6 +246,60 @@
                 timeChart.setOption(option);
             }
 
+
+            function getTimePercent() {
+                var taskPercentChart = echarts.init(document.getElementById('time_percent'));
+                var allTasks = @Html.Raw(Json.Encode(ViewBag.CurrentTimes));
+                var allProjects =  @Html.Raw(Json.Encode(ViewBag.ProjectNames));
+                projectData = [];
+                for (var i = 0; i < allTasks.length; i++) {
+                    var data = new Object();
+                    data.name = allProjects[i];
+                    data.value = allTasks[i];
+                    projectData.push(data);
+                }
+                // 指定图表的配置项和数据
+                option = {
+                    title : {
+                        text: 'Total Time',
+                    },
+                    tooltip : {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 'right',
+                        data:  @Html.Raw(Json.Encode(ViewBag.ProjectNames))
+                    },
+                    series : [
+                        {
+                            name: 'Task Percent',
+                            type: 'pie',
+                            radius : '55%',
+                            center: ['50%', '50%'],
+                            label: {
+                                normal: {
+                                    show: true,
+                                    position: 'outside',
+                                    formatter: '{b}:{d}%'//模板变量有 {a}、{b}、{c}、{d}，分别表示系列名，数据名，数据值，百分比。{d}数据会根据value值计算百分比
+                                }
+                            },
+                            data: projectData,
+                            itemStyle: {
+                                emphasis: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }
+                    ]
+                };
+                // 使用刚指定的配置项和数据显示图表。
+                taskPercentChart.setOption(option);
+            }
+
             getTask();
             getTaskPercent();
             getTime();

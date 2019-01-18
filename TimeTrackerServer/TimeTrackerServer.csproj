@@ -200,6 +200,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\ReportService.cs" />
+    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -287,6 +288,7 @@
     </Content>
     <Content Include="Content\js\bootstrap-datepicker\LICENSE" />
     <Content Include="Content\js\bootstrap-datepicker\README.md" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\echarts.min.js" />

@@ -29,7 +29,7 @@ namespace TimeTrackerServer.Controllers
                     var password =
                         System.Web.Security.FormsAuthentication
                             .HashPasswordForStoringInConfigFile(para.Password, "MD5");
-                    var user = db.T_Sys_UserInfo.Where(a => a.UseName.Equals(para.UserName)).FirstOrDefault();
+                    var user = db.T_Sys_UserInfo.FirstOrDefault(a => a.UseName.Equals(para.UserName));
                     if (user.UserPwd.Equals(password))
                     {
                         result.Code = SystemConst.MsgSuccess;

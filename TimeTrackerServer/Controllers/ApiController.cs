@@ -26,9 +26,7 @@ namespace TimeTrackerServer.Controllers
             {
                 using (var db = new TimeTrackerEntities())
                 {
-                    var password =
-                        System.Web.Security.FormsAuthentication
-                            .HashPasswordForStoringInConfigFile(para.Password, "MD5");
+                    var password = AppUtils.MD5(para.Password);
                     var user = db.T_Sys_UserInfo.FirstOrDefault(a => a.UseName.Equals(para.UserName));
                     if (user.UserPwd.Equals(password))
                     {

@@ -90,8 +90,10 @@ namespace TimeTrackerServer.App_Start
         {
             using (var db = new TimeTrackerEntities())
             {
-                T_Sys_UserInfo user = db.T_Sys_UserInfo.Where(a => a.UseName.Equals(userName)).FirstOrDefault();
-                if (user != null && user.UserPwd.Equals(AppUtils.SHA1Hash(password)))
+                T_Sys_UserInfo user = db.T_Sys_UserInfo.FirstOrDefault(a => a.UseName.Equals(userName));
+                if (user != null &&
+                    user.UserPwd.Equals(
+                        ))
                     return SignInStatus.Success;
                 else
                     return SignInStatus.Failure;

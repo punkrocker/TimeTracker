@@ -30,6 +30,11 @@ namespace Model
             return Convert.ToBase64String(bytes_sha1_out);
         }
 
+        public static string MD5(string origin)
+        {
+            return System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(origin, "MD5");
+        }
+
         public static string ToString(string str)
         {
             return str == null ? string.Empty : Convert.ToString(str);

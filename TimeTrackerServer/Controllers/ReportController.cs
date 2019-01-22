@@ -5,10 +5,12 @@ using System.Web;
 using System.Web.Mvc;
 using Model;
 using Newtonsoft.Json;
+using TimeTrackerServer.App_Start;
 using TimeTrackerServer.Services;
 
 namespace TimeTrackerServer.Controllers
 {
+    [Login]
     public class ReportController : Controller
     {
         // GET: Report

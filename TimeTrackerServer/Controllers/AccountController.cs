@@ -112,11 +112,11 @@ namespace TimeTrackerServer.Controllers
                 T_Sys_UserInfo user = db.T_Sys_UserInfo.Where(a => a.UserID == userID).FirstOrDefault();
                 if (user != null)
                 {
-                    if (AppUtils.SHA1Hash(origin_password).Equals(user.UserPwd))
+                    if (AppUtils.MD5(origin_password).Equals(user.UserPwd))
                     {
                         if (new_password.Equals(re_new_password))
                         {
-                            user.UserPwd = AppUtils.SHA1Hash(new_password);
+                            user.UserPwd = AppUtils.MD5(new_password);
                             db.T_Sys_UserInfo.Attach(user);
                             db.Entry(user).State = System.Data.Entity.EntityState.Modified;
                             db.SaveChanges();

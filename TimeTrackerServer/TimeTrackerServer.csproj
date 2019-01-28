@@ -380,6 +380,7 @@
     <Content Include="Content\layouts\layout\img\photo2.jpg" />
     <Content Include="Content\layouts\layout\img\photo3.jpg" />
     <Content Include="Content\layouts\layout\img\remove-icon-small.png" />
+    <Content Include="Content\layouts\layout\img\report_img.png" />
     <Content Include="Content\layouts\layout\img\search_icon_light.png" />
     <Content Include="Content\layouts\layout\img\sidebar-menu-arrow-reverse.png" />
     <Content Include="Content\layouts\layout\img\sidebar-menu-arrow-right.png" />

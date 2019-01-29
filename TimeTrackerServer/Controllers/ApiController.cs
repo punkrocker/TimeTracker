@@ -7,6 +7,7 @@ using Model;
 using Model.Dto;
 using Model.WebResult;
 using Newtonsoft.Json;
+using TimeTrackerServer.Services;
 using WebGrease.Css.Ast.Selectors;
 
 namespace TimeTrackerServer.Controllers
@@ -98,23 +99,9 @@ namespace TimeTrackerServer.Controllers
             };
             try
             {
-                using (var db = new TimeTrackerEntities())
-                {
-                    var customerTeams = (from teams in db.T_SD_CustomerTeam.Where(a =>
-                            a.CustomerID == customerID && a.Status == SystemConst.StatusEnable)
-                        join customer in db.T_SD_Customer on teams.CustomerID equals customer.CustomerID
-                            into customerTeamInfos
-                        from customerTeamInfo in customerTeamInfos.DefaultIfEmpty().Where(a =>
-                            a.CustomerID == customerID && a.Status == SystemConst.StatusEnable)
-                        select new CustomerTeamsDto
-                        {
-                            CustomerName = customerTeamInfo.CustomerName,
-                            TeamId = teams.TeamID,
-                            TeamName = teams.TeamName
-                        }).ToList();
-                    result.Code = SystemConst.MsgSuccess;
-                    result.Data = customerTeams;
-                }
+                var customerTeams = CustomerService.GetCustomerTeams(customerID).ToList();
+                result.Code = SystemConst.MsgSuccess;
+                result.Data = customerTeams;
             }
             catch (Exception e)
             {

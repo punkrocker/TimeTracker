@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Model;
+using Model.Dto;
 using Newtonsoft.Json;
 using TimeTrackerServer.App_Start;
 using TimeTrackerServer.Services;
@@ -23,13 +24,14 @@ namespace TimeTrackerServer.Controllers
         }
 
         [HttpPost]
-        public ActionResult Report(List<ReportDisplayInfo> reportList, string comment)
+        public ActionResult Report(List<ReportDisplayInfo> reportList, string comment, int customerId)
         {
             List<String> projectNames = new List<string>();
             List<Int32> lastTasks = new List<Int32>();
             List<Int32> currentTasks = new List<Int32>();
             List<Int32> lastTimes = new List<Int32>();
             List<Int32> currentTimes = new List<Int32>();
+            List<CustomerTeamsDto> customerTeams = CustomerService.GetCustomerTeams(customerId).ToList();
             foreach (ReportDisplayInfo reportDisplayInfo in reportList)
             {
                 projectNames.Add(reportDisplayInfo.ProjectName);
@@ -45,6 +47,7 @@ namespace TimeTrackerServer.Controllers
             ViewBag.lastTimes = lastTimes;
             ViewBag.currentTimes = currentTimes;
             ViewBag.comment = comment;
+            ViewBag.customerTeams = customerTeams;
             return View();
         }
 

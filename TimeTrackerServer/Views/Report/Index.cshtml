@@ -234,10 +234,11 @@
 
     function generate() {
         var comment = $('#comment').val();
+        var customerId = GetQueryString('customerId');
         $.ajax({
             url : "Report",
             type: "post",
-            data: { reportList: reportList, comment: comment },
+            data: { reportList: reportList, comment: comment, customerId: customerId },
             success: function (date) {
                 var obj = window.open("about:blank");
                 obj.document.write(date);

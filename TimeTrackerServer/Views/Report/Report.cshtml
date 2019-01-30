@@ -109,12 +109,12 @@
                 <div style="text-align: center">
                     <p><h4><b>Monthly Summary</b></h4></p>
                     <div class="panel-heading bg-green bg-font-green">
-                        <h3 class="panel-title" style="text-align: left">Panel Title</h3>
+                        <h3 class="panel-title" style="text-align: left">@ViewBag.customerTeams[0].CustomerName</h3>
                     </div>
                     <div class="panel-body">
                         <div class="col-md-4">
                             <p>Key Contact:</p>
-                            <p><b>Dennis</b></p>
+                            <p><b>@ViewBag.customerTeams[0].Contact</b></p>
                         </div>
                         <div class="col-md-4">
                             <p>Transaction:</p>
@@ -126,7 +126,7 @@
                         </div>
                         <div class="col-md-4">
                             <p>Team:</p>
-                            <p><b>Dennis</b></p>
+                            <p><b>@ViewBag.customerTeams.Count</b></p>
                         </div>
                         <div class="col-md-4">
                             <p>Project:</p>

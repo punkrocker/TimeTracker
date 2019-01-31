@@ -44,8 +44,10 @@ namespace TimeTrackerServer.Controllers
             ViewBag.projectNames = projectNames;
             ViewBag.lastTasks = lastTasks;
             ViewBag.currentTasks = currentTasks;
+            ViewBag.sumTask = currentTasks.Sum();
             ViewBag.lastTimes = lastTimes;
             ViewBag.currentTimes = currentTimes;
+            ViewBag.sumTimes = currentTimes.Sum();
             ViewBag.comment = comment;
             ViewBag.customerTeams = customerTeams;
             ViewBag.currentMonth = currentMonth;

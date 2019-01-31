@@ -118,11 +118,11 @@
                         </div>
                         <div class="col-md-4">
                             <p>Transaction:</p>
-                            <p><b>Dennis</b></p>
+                            <p><b>@ViewBag.sumTask</b></p>
                         </div>
                         <div class="col-md-4">
                             <p>Time(min):</p>
-                            <p><b>Dennis</b></p>
+                            <p><b>@ViewBag.sumTimes</b></p>
                         </div>
                         <div class="col-md-4">
                             <p>Team:</p>
@@ -134,7 +134,10 @@
                         </div>
                         <div class="col-md-4">
                             <p>Actual Processor Use:</p>
-                            <p><b>Dennis</b></p>
+                            @{
+                                var avg = Math.Round(ViewBag.sumTimes / 8400.0, 2);
+                            }
+                            <p><b>@avg</b></p>
                         </div>
                     </div>
                 </div>

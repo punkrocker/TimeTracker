@@ -24,7 +24,7 @@ namespace TimeTrackerServer.Controllers
         }
 
         [HttpPost]
-        public ActionResult Report(List<ReportDisplayInfo> reportList, string comment, int customerId)
+        public ActionResult Report(List<ReportDisplayInfo> reportList, string comment, int customerId, string currentMonth)
         {
             List<String> projectNames = new List<string>();
             List<Int32> lastTasks = new List<Int32>();
@@ -48,6 +48,7 @@ namespace TimeTrackerServer.Controllers
             ViewBag.currentTimes = currentTimes;
             ViewBag.comment = comment;
             ViewBag.customerTeams = customerTeams;
+            ViewBag.currentMonth = currentMonth;
             return View();
         }
 

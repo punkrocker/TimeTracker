@@ -235,10 +235,17 @@
     function generate() {
         var comment = $('#comment').val();
         var customerId = GetQueryString('customerId');
+        var currentMonth = GetQueryString('reportDate');
+        if (currentMonth === null || currentMonth === '') {
+            var myDate = new Date();
+            var month = '0' + (myDate.getMonth() + 1);
+            month = month.substring(month.length - 2, month.length);
+            currentMonth = myDate.getFullYear() + '-' + month;
+        }
         $.ajax({
             url : "Report",
             type: "post",
-            data: { reportList: reportList, comment: comment, customerId: customerId },
+            data: { reportList: reportList, comment: comment, customerId: customerId, currentMonth: currentMonth },
             success: function (date) {
                 var obj = window.open("about:blank");
                 obj.document.write(date);

@@ -37,5 +37,13 @@ namespace TimeTrackerServer.Services
                 return customerTeams;
             }
         }
+
+        public static IList<T_PM_Project> GetCustomerProjects(int customerID)
+        {
+            using (var db = new TimeTrackerEntities())
+            {
+                return db.T_PM_Project.Where(a => a.CustomerID == customerID).ToList();
+            }
+        }
     }
 }

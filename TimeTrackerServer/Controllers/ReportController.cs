@@ -51,6 +51,7 @@ namespace TimeTrackerServer.Controllers
             ViewBag.comment = comment;
             ViewBag.customerTeams = customerTeams;
             ViewBag.currentMonth = currentMonth;
+            ViewBag.sumAllProjects = CustomerService.GetAllCustomers().Count;
             return View();
         }
 

@@ -84,13 +84,13 @@ namespace TimeTrackerServer.Services
             }
         }
 
-        public static void ModifyProjectTime(int projectID, Int32 changeTime)
+        public static void ModifyProjectTime(int projectId, Int32 changeTime)
         {
             using (var db = new TimeTrackerEntities())
             {
                 DateTime today = DateTime.Now;
                 var allProjectTasks = db.T_PM_Task.Where(a =>
-                        a.ProjectID == projectID && a.TaskDate.Year == today.Year && a.TaskDate.Month == today.Month)
+                        a.ProjectID == projectId && a.TaskDate.Year == today.Year && a.TaskDate.Month == today.Month)
                     .ToList();
                 int index = 0;
                 //获取变化量为增还是为减
@@ -126,6 +126,19 @@ namespace TimeTrackerServer.Services
 
                 db.SaveChanges();
             }
+        }
+
+        public static IList<CustomerProjectDetail> GetCustomerProjectDetails(int customerId, string reportDate)
+        {
+            using (var db = new TimeTrackerEntities())
+            {
+                DateTime reportMonth = reportDate == null || reportDate.Equals(string.Empty)
+                    ? DateTime.Now
+                    : Convert.ToDateTime(reportDate);
+                DateTime lastMonth = reportMonth.AddMonths(-1);
+                //var customerProjectDetails = from VAR in reportDate 
+            }
+            return new List<CustomerProjectDetail>();
         }
     }
 }

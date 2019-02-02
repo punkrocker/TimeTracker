@@ -42,7 +42,7 @@ namespace TimeTrackerServer.Services
         {
             using (var db = new TimeTrackerEntities())
             {
-                return db.T_PM_Project.Where(a => a.CustomerID == customerID).ToList();
+                return db.T_PM_Project.Where(a => a.CustomerID == customerID && a.Status==SystemConst.StatusIssued).ToList();
             }
         }
     }

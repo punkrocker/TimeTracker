@@ -14,6 +14,7 @@ namespace Model
         public static int StatusDisable = 0;
 
         public static int StatusIssued = 10;
+        public static int StatusPaused = 15;
 
         public static string PicPath = "/Site/Pics/";
     }

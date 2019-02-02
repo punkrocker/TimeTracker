@@ -130,7 +130,7 @@
                         </div>
                         <div class="col-md-4">
                             <p>Project:</p>
-                            <p><b>@ViewBag.sumAllProjects</b></p>
+                            <p><b>@ViewBag.sumAllProjects.Count</b></p>
                         </div>
                         <div class="col-md-4">
                             <p>Actual Processor Use:</p>
@@ -152,7 +152,8 @@
                             <table class="table table-striped table-hover">
                                 <thead>
                                     <tr>
-                                        <th> # </th>
+                                        <th> PN/TN </th>
+                                        @*@foreach(var teamName : )*@
                                         <th> First Name </th>
                                         <th> Last Name </th>
                                         <th> Username </th>

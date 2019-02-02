@@ -136,9 +136,33 @@ namespace TimeTrackerServer.Services
                     ? DateTime.Now
                     : Convert.ToDateTime(reportDate);
                 DateTime lastMonth = reportMonth.AddMonths(-1);
-                //var customerProjectDetails = from VAR in reportDate 
+                var customerProjectDetails = (from tasks in db.T_PM_Task.Where(a =>
+                        a.TaskDate.Year == reportMonth.Year && a.TaskDate.Month == reportMonth.Month)
+                    join teams in db.T_SD_CustomerTeam.Where(a => a.CustomerID == customerId) on tasks.TeamID equals
+                        teams.TeamID
+                    join projects in db.T_PM_Project.Where(a => a.CustomerID == customerId) on tasks.ProjectID equals
+                        projects.ProjectID
+                    group new
+                    {
+                        teams.TeamName,
+                        projects.ProjectName,
+                        tasks.ReportTime,
+                        tasks.RealTask
+                    } by new
+                    {
+                        teams.TeamName,
+                        projects.ProjectName,
+                    }
+                    into g
+                    select new CustomerProjectDetail
+                    {
+                        ProjectName = g.Key.ProjectName,
+                        TeamName = g.Key.TeamName,
+                        TaskCount = g.Sum(t => t.RealTask),
+                        TimeCount = g.Sum(t => t.ReportTime),
+                    }).ToList();
+                return customerProjectDetails;
             }
-            return new List<CustomerProjectDetail>();
         }
     }
 }

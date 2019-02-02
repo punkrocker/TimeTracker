@@ -11,7 +11,7 @@ namespace Model
         public int TeamId { get; set; }
         public string ProjectName { get; set; }
         public string TeamName { get; set; }
-        public Int32 TaskCount { get; set; }
-        public Int32 TimeCount { get; set; }
+        public Int32? TaskCount { get; set; }
+        public Int32? TimeCount { get; set; }
     }
 }

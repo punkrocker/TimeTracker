@@ -34,6 +34,8 @@ namespace TimeTrackerServer.Controllers
             List<CustomerTeamsDto> customerTeams = CustomerService.GetCustomerTeams(customerId).ToList();
             List<T_PM_Project> cc = CustomerService.GetCustomerProjects(customerId).ToList();
             List<CustomerProjectDetail> customerProjectDetails = ReportService.GetCustomerProjectDetails(customerId, currentMonth).ToList();
+            Dictionary<string, CustomerProjectDetail> displayTableInfo =
+                ReportService.GetDisplayCustomerProjectDetails(customerProjectDetails);
             foreach (ReportDisplayInfo reportDisplayInfo in reportList)
             {
                 projectNames.Add(reportDisplayInfo.ProjectName);
@@ -54,7 +56,7 @@ namespace TimeTrackerServer.Controllers
             ViewBag.customerTeams = customerTeams;
             ViewBag.currentMonth = currentMonth;
             ViewBag.sumAllProjects = cc;
-            ViewBag.customerProjectDetails = customerProjectDetails;
+            ViewBag.customerProjectDetails = displayTableInfo;
             return View();
         }
 

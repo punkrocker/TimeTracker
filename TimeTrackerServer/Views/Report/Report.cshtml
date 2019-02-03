@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Model
+@{
     ViewBag.Title = "title";
 }
 @section scripts{
@@ -164,8 +165,28 @@
                                     {
                                         <tr>
                                             <td> @project.ProjectName </td>
+                                            @foreach (var team in ViewBag.customerTeams)
+                                            {
+                                                var displayInfo = "";
+                                                CustomerProjectDetail selectedDetail = null;
+                                                if (ViewBag.customerProjectDetails.TryGetValue(project.ProjectName + "-" + team.TeamName,
+                                                    out selectedDetail))
+                                                {
+                                                    if (selectedDetail.TaskCount != null && selectedDetail.TimeCount != null)
+                                                    {
+                                                        if (selectedDetail.TaskCount != 0)
+                                                        {
+                                                            displayInfo = selectedDetail.TimeCount.ToString() + "/" + selectedDetail.TaskCount.ToString();
+                                                        }
+                                                    }
+                                                }
+                                                <td> @displayInfo </td>
+                                            }
                                         </tr>
                                     }
+                                    <tr>
+                                        <td> Total </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

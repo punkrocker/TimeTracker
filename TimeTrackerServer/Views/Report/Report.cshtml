@@ -67,7 +67,7 @@
                         </p>
                     </div>
                     <p style="font-size: 14px; text-align: left">
-                        Most UnionServ clients haven’t downsized as a result of our solutions. They’ve grown. Clients we serve are not looking to lose valuable staff. Good staffs are hard to find and take time to train. That's why our Remote Staffing model is not about downsizing, but cost effective growth. <br/>
+                        Most UnionServ clients haven’t downsized as a result of our solutions. They’ve grown. Clients we serve are not looking to lose valuable staff. Good staffs are hard to find and take time to train. That's why our Remote Staffing model is not about downsizing, but cost effective growth. <br />
                         Our goal is to help best companies outsource to win, not to shrink. They outsource to innovate faster and more cheaply in order to grow larger, gain market share, and hire more and different specialists - not to save money by firing people.
                     </p>
                     <div class="note note-info">
@@ -92,7 +92,7 @@
                         </p>
                     </div>
                     <p style="font-size: 14px; text-align: left">
-                        UnionServ was founded by US Insurance processing professionals, experienced with retail brokers, MGAs and carriers’ tasks. UnionServ provides cost-effective solutions to time consuming operations and helps insurance agencies to reduce labor and E&O exposure costs. Our implementation team has many years of insurance industry and operations experience. <br/>
+                        UnionServ was founded by US Insurance processing professionals, experienced with retail brokers, MGAs and carriers’ tasks. UnionServ provides cost-effective solutions to time consuming operations and helps insurance agencies to reduce labor and E&O exposure costs. Our implementation team has many years of insurance industry and operations experience. <br />
                         Our operations leaders are both industry experts and accomplished entrepreneurs that know that your business relies on the relationships you've built with your clients through trust and excellence.
                     </p>
                 </div>
@@ -161,12 +161,20 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @{
+                                        Dictionary<string, int[]> total  =new Dictionary<string, int[]>();
+                                    }
                                     @foreach (var project in ViewBag.sumAllProjects)
                                     {
                                         <tr>
                                             <td> @project.ProjectName </td>
                                             @foreach (var team in ViewBag.customerTeams)
                                             {
+                                                if (!total.ContainsKey(team.TeamName))
+                                                {
+                                                    int[] x = {0, 0};
+                                                    total.Add(team.TeamName, x);
+                                                }
                                                 var displayInfo = "";
                                                 CustomerProjectDetail selectedDetail = null;
                                                 if (ViewBag.customerProjectDetails.TryGetValue(project.ProjectName + "-" + team.TeamName,
@@ -177,6 +185,10 @@
                                                         if (selectedDetail.TaskCount != 0)
                                                         {
                                                             displayInfo = selectedDetail.TimeCount.ToString() + "/" + selectedDetail.TaskCount.ToString();
+                                                            int[] x;
+                                                            total.TryGetValue(team.TeamName, out x);
+                                                            x[0] += Convert.ToInt32(selectedDetail.TimeCount);
+                                                            x[1] += Convert.ToInt32(selectedDetail.TaskCount);
                                                         }
                                                     }
                                                 }
@@ -186,13 +198,26 @@
                                     }
                                     <tr>
                                         <td> Total </td>
+                                        @foreach (var team in ViewBag.customerTeams)
+                                        {
+                                            int[] x;
+                                            total.TryGetValue(team.TeamName, out x);
+                                            if (x[1] != 0)
+                                            {
+                                                <td> @x[0]/@x[1] </td>
+                                            }
+                                            else
+                                            {
+                                                <td></td>
+                                            }
+                                        }
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-                <div >
+                <div>
                     @if (!ViewBag.comment.ToString().Trim().Equals(string.Empty))
                     {
                         <p><h4><b>Comment:</b></h4></p>
@@ -203,7 +228,7 @@
                         }
                     }
                 </div>
-                <br/>
+                <br />
             </div>
         </div>
 

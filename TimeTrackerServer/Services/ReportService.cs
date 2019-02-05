@@ -214,8 +214,17 @@ namespace TimeTrackerServer.Services
                     line = result[projects.IndexOf(customerProjectDetail.ProjectName) + 1];
                 }
 
-                //line.Add(customerProjectDetail.TimeCount.ToString() + "/" + customerProjectDetail.TaskCount.ToString());
+                if (customerProjectDetail.TaskCount != null && customerProjectDetail.TaskCount != 0)
+                {
+                    line[title.IndexOf(customerProjectDetail.TeamName)] = customerProjectDetail.TimeCount.ToString() + "/" + customerProjectDetail.TaskCount.ToString();
+                }
             }
+
+            List<string> total = new List<string>
+            {
+                "Total"
+            };
+            result.Add(total);
 
             return result;
         }

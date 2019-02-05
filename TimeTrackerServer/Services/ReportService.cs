@@ -165,13 +165,32 @@ namespace TimeTrackerServer.Services
             }
         }
 
-        public static Dictionary<string, CustomerProjectDetail> GetDisplayCustomerProjectDetails(IList<CustomerProjectDetail> customerProjectDetails)
+        public static Dictionary<string, CustomerProjectDetail> GetDisplayCustomerProjectDetails(
+            IList<CustomerProjectDetail> customerProjectDetails)
         {
             Dictionary<string, CustomerProjectDetail> result = new Dictionary<string, CustomerProjectDetail>();
             foreach (var customerProjectDetail in customerProjectDetails)
             {
-                result.Add(customerProjectDetail.ProjectName + "-" + customerProjectDetail.TeamName, customerProjectDetail);
+                result.Add(customerProjectDetail.ProjectName + "-" + customerProjectDetail.TeamName,
+                    customerProjectDetail);
             }
+
+            return result;
+        }
+
+        public static List<List<string>> GetDisplayCustomerProjectDetails2(IList<CustomerProjectDetail> customerProjectDetails)
+        {
+            List<List<string>> result = new List<List<string>>();
+            List<string> title = new List<string>
+            {
+                "PN/TN"
+            };
+            foreach (CustomerProjectDetail customerProjectDetail in customerProjectDetails)
+            {
+                if (!title.Contains(customerProjectDetail.TeamName))
+                    title.Add(customerProjectDetail.TeamName);
+            }
+            result.Add(title);
             return result;
         }
     }

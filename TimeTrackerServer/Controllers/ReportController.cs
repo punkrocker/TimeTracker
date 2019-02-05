@@ -34,8 +34,9 @@ namespace TimeTrackerServer.Controllers
             List<CustomerTeamsDto> customerTeams = CustomerService.GetCustomerTeams(customerId).ToList();
             List<T_PM_Project> cc = CustomerService.GetCustomerProjects(customerId).ToList();
             List<CustomerProjectDetail> customerProjectDetails = ReportService.GetCustomerProjectDetails(customerId, currentMonth).ToList();
-            Dictionary<string, CustomerProjectDetail> displayTableInfo =
-                ReportService.GetDisplayCustomerProjectDetails(customerProjectDetails);
+            //Dictionary<string, CustomerProjectDetail> displayTableInfo =
+                //ReportService.GetDisplayCustomerProjectDetails(customerProjectDetails);
+            List<List<string>> displayTableInfo = ReportService.GetDisplayCustomerProjectDetails2(customerProjectDetails);
             foreach (ReportDisplayInfo reportDisplayInfo in reportList)
             {
                 projectNames.Add(reportDisplayInfo.ProjectName);

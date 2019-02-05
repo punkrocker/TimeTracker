@@ -127,7 +127,7 @@
                         </div>
                         <div class="col-md-4">
                             <p>Team:</p>
-                            <p><b>@ViewBag.customerTeams.Count</b></p>
+                            <p><b>@(ViewBag.customerProjectDetails[0].Count - 1)</b></p>
                         </div>
                         <div class="col-md-4">
                             <p>Project:</p>
@@ -153,10 +153,9 @@
                             <table class="table table-striped table-hover">
                                 <thead>
                                     <tr>
-                                        <th> PN/TN </th>
-                                        @foreach (var team in ViewBag.customerTeams)
+                                        @foreach (var title in ViewBag.customerProjectDetails[0])
                                         {
-                                            <th> @team.TeamName </th>
+                                            <th> @title </th>
                                         }
                                     </tr>
                                 </thead>
@@ -164,39 +163,8 @@
                                     @{
                                         Dictionary<string, int[]> total  =new Dictionary<string, int[]>();
                                     }
-                                    @foreach (var project in ViewBag.sumAllProjects)
-                                    {
-                                        <tr>
-                                            <td> @project.ProjectName </td>
-                                            @foreach (var team in ViewBag.customerTeams)
-                                            {
-                                                if (!total.ContainsKey(team.TeamName))
-                                                {
-                                                    int[] x = {0, 0};
-                                                    total.Add(team.TeamName, x);
-                                                }
-                                                var displayInfo = "";
-                                                CustomerProjectDetail selectedDetail = null;
-                                                if (ViewBag.customerProjectDetails.TryGetValue(project.ProjectName + "-" + team.TeamName,
-                                                    out selectedDetail))
-                                                {
-                                                    if (selectedDetail.TaskCount != null && selectedDetail.TimeCount != null)
-                                                    {
-                                                        if (selectedDetail.TaskCount != 0)
-                                                        {
-                                                            displayInfo = selectedDetail.TimeCount.ToString() + "/" + selectedDetail.TaskCount.ToString();
-                                                            int[] x;
-                                                            total.TryGetValue(team.TeamName, out x);
-                                                            x[0] += Convert.ToInt32(selectedDetail.TimeCount);
-                                                            x[1] += Convert.ToInt32(selectedDetail.TaskCount);
-                                                        }
-                                                    }
-                                                }
-                                                <td> @displayInfo </td>
-                                            }
-                                        </tr>
-                                    }
-                                    <tr>
+                                    
+                                    @*<tr>
                                         <td> Total </td>
                                         @foreach (var team in ViewBag.customerTeams)
                                         {
@@ -211,7 +179,7 @@
                                                 <td></td>
                                             }
                                         }
-                                    </tr>
+                                    </tr>*@
                                 </tbody>
                             </table>
                         </div>

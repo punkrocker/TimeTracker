@@ -178,7 +178,8 @@ namespace TimeTrackerServer.Services
             return result;
         }
 
-        public static List<List<string>> GetDisplayCustomerProjectDetails2(IList<CustomerProjectDetail> customerProjectDetails)
+        public static List<List<string>> GetDisplayCustomerProjectDetails2(
+            IList<CustomerProjectDetail> customerProjectDetails)
         {
             List<List<string>> result = new List<List<string>>();
             List<string> title = new List<string>
@@ -189,8 +190,33 @@ namespace TimeTrackerServer.Services
             {
                 if (!title.Contains(customerProjectDetail.TeamName))
                     title.Add(customerProjectDetail.TeamName);
+
             }
+
             result.Add(title);
+            List<string> projects = new List<string>();
+            foreach (CustomerProjectDetail customerProjectDetail in customerProjectDetails)
+            {
+                List<string> line = null;
+                if (!projects.Contains(customerProjectDetail.ProjectName))
+                {
+                    projects.Add(customerProjectDetail.ProjectName);
+                    line = new List<string> {customerProjectDetail.ProjectName};
+                    foreach (var t in title)
+                    {
+                        line.Add("");
+                    }
+
+                    result.Add(line);
+                }
+                else
+                {
+                    line = result[projects.IndexOf(customerProjectDetail.ProjectName) + 1];
+                }
+
+                //line.Add(customerProjectDetail.TimeCount.ToString() + "/" + customerProjectDetail.TaskCount.ToString());
+            }
+
             return result;
         }
     }

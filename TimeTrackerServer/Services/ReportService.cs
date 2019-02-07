@@ -193,7 +193,7 @@ namespace TimeTrackerServer.Services
                 {
                     projects.Add(customerProjectDetail.ProjectName);
                     line = new List<string> {customerProjectDetail.ProjectName};
-                    foreach (var t in title)
+                    for (int i = 0; i < title.Count - 1; i++)
                     {
                         line.Add("");
                     }
@@ -216,6 +216,14 @@ namespace TimeTrackerServer.Services
                 "Total"
             };
             result.Add(total);
+            for (int i = 1; i < title.Count; i++)
+            {
+                string teamName = title[i];
+                int? taskCount = customerProjectDetails.Where(a => a.TeamName.Equals(teamName)).Sum(a => a.TaskCount);
+                int? timeCount = customerProjectDetails.Where(a => a.TeamName.Equals(teamName)).Sum(a => a.TimeCount);
+                if (timeCount != 0)
+                    total.Add(timeCount.ToString() + "/" + taskCount.ToString());
+            }
 
             return result;
         }

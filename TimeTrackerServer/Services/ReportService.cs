@@ -135,7 +135,6 @@ namespace TimeTrackerServer.Services
                 DateTime reportMonth = reportDate == null || reportDate.Equals(string.Empty)
                     ? DateTime.Now
                     : Convert.ToDateTime(reportDate);
-                DateTime lastMonth = reportMonth.AddMonths(-1);
                 var customerProjectDetails = (from tasks in db.T_PM_Task.Where(a =>
                         a.TaskDate.Year == reportMonth.Year && a.TaskDate.Month == reportMonth.Month)
                     join teams in db.T_SD_CustomerTeam.Where(a => a.CustomerID == customerId) on tasks.TeamID equals

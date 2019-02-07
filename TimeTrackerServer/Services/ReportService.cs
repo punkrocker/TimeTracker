@@ -7,7 +7,7 @@ namespace TimeTrackerServer.Services
 {
     public class ReportService
     {
-        public IList<ReportDisplayInfo> GetReportDisplayInfos(int? customerId, string reportDate)
+        public IList<ReportDisplayInfo> GetReportDisplayInfos(int? customerId, string reportDate, int userId)
         {
             if (customerId == null)
                 return new List<ReportDisplayInfo>();
@@ -164,20 +164,7 @@ namespace TimeTrackerServer.Services
             }
         }
 
-        public static Dictionary<string, CustomerProjectDetail> GetDisplayCustomerProjectDetails(
-            IList<CustomerProjectDetail> customerProjectDetails)
-        {
-            Dictionary<string, CustomerProjectDetail> result = new Dictionary<string, CustomerProjectDetail>();
-            foreach (var customerProjectDetail in customerProjectDetails)
-            {
-                result.Add(customerProjectDetail.ProjectName + "-" + customerProjectDetail.TeamName,
-                    customerProjectDetail);
-            }
-
-            return result;
-        }
-
-        public static List<List<string>> GetDisplayCustomerProjectDetails2(
+        public static List<List<string>> GetDisplayCustomerProjectDetails(
             IList<CustomerProjectDetail> customerProjectDetails)
         {
             List<List<string>> result = new List<List<string>>();

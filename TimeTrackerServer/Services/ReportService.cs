@@ -7,7 +7,7 @@ namespace TimeTrackerServer.Services
 {
     public class ReportService
     {
-        public IList<ReportDisplayInfo> GetReportDisplayInfos(int? customerId, string reportDate, int userId)
+        public IList<ReportDisplayInfo> GetTwoMonthReportInfo(int? customerId, string reportDate, int userId)
         {
             if (customerId == null)
                 return new List<ReportDisplayInfo>();
@@ -128,7 +128,7 @@ namespace TimeTrackerServer.Services
             }
         }
 
-        public static IList<CustomerProjectDetail> GetCustomerProjectDetails(int customerId, string reportDate)
+        public static IList<CustomerProjectDetail> GetCustomerProjectDetails(int customerId, string reportDate, int userId)
         {
             using (var db = new TimeTrackerEntities())
             {
@@ -141,6 +141,9 @@ namespace TimeTrackerServer.Services
                         teams.TeamID
                     join projects in db.T_PM_Project.Where(a => a.CustomerID == customerId) on tasks.ProjectID equals
                         projects.ProjectID
+                    join member in db.T_PM_Member.Where(a =>
+                            a.Charge.Equals(SystemConst.StatusCharge) && a.UserID == userId) on tasks.ProjectID equals
+                        member.ProjectID
                     group new
                     {
                         teams.TeamName,

@@ -18,7 +18,7 @@ namespace TimeTrackerServer.Controllers
         public ActionResult Index(int? customerId, string reportDate)
         {
             ReportService reportService = new ReportService();
-            ViewBag.model = reportService.GetReportDisplayInfos(customerId, reportDate, Convert.ToInt16(Session["UserId"]));
+            ViewBag.model = reportService.GetTwoMonthReportInfo(customerId, reportDate, Convert.ToInt16(Session["UserId"]));
             ViewBag.customers = CustomerService.GetAllCustomers();
             return View();
         }
@@ -33,7 +33,7 @@ namespace TimeTrackerServer.Controllers
             List<Int32> currentTimes = new List<Int32>();
             List<CustomerTeamsDto> customerTeams = CustomerService.GetCustomerTeams(customerId).ToList();
             List<T_PM_Project> cc = CustomerService.GetCustomerProjects(customerId).ToList();
-            List<CustomerProjectDetail> customerProjectDetails = ReportService.GetCustomerProjectDetails(customerId, currentMonth).ToList();
+            List<CustomerProjectDetail> customerProjectDetails = ReportService.GetCustomerProjectDetails(customerId, currentMonth, Convert.ToInt16(Session["UserId"])).ToList();
             List<List<string>> displayTableInfo = ReportService.GetDisplayCustomerProjectDetails(customerProjectDetails);
             foreach (ReportDisplayInfo reportDisplayInfo in reportList)
             {

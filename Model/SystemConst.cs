@@ -17,5 +17,7 @@ namespace Model
         public static int StatusPaused = 15;
 
         public static string PicPath = "/Site/Pics/";
+
+        public static string StatusCharge = "1";
     }
 }

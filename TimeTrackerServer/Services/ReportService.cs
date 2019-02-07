@@ -21,12 +21,13 @@ namespace TimeTrackerServer.Services
                         .Where(a => a.TaskDate.Year == lastMonth.Year && a.TaskDate.Month == lastMonth.Month)
                         .GroupBy(a => a.ProjectID)
                     join project in db.T_PM_Project.Where(a => a.CustomerID == customerId) on reportRecords.Key equals
-                        project
-                            .ProjectID
-                        into pro
+                        project.ProjectID into pro
                     from i in pro.DefaultIfEmpty()
                     where i.ProjectName != null
-                    select new ReportInfo
+                                   join member in db.T_PM_Member.Where(a =>
+                            a.Charge.Equals(SystemConst.StatusCharge) && a.UserID == userId) on reportRecords.Key equals
+                        member.ProjectID
+                                   select new ReportInfo
                     {
                         ProjectName = i.ProjectName,
                         TaskNum = reportRecords.Sum(t => t.RealTask),
@@ -46,7 +47,10 @@ namespace TimeTrackerServer.Services
                         into pro
                     from i in pro.DefaultIfEmpty()
                     where i.ProjectName != null
-                    select new ReportInfo
+                    join member in db.T_PM_Member.Where(a =>
+                            a.Charge.Equals(SystemConst.StatusCharge) && a.UserID == userId) on reportRecords.Key equals
+                        member.ProjectID
+                                    select new ReportInfo
                     {
                         ProjectId = i.ProjectID,
                         ProjectName = i.ProjectName,

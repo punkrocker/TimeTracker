@@ -67,22 +67,20 @@ namespace TimeTrackerServer.Services
                     from lastInfo in tmp.DefaultIfEmpty()
                     select new ReportDisplayInfo
                     {
-                        ProjectId = currentInfo.ProjectId == null ? 0 : currentInfo.ProjectId,
-                        ProjectName = currentInfo.ProjectName == null ? string.Empty : currentInfo.ProjectName,
+                        ProjectId = currentInfo.ProjectId ?? 0,
+                        ProjectName = currentInfo.ProjectName ?? string.Empty,
                         CurrentTask = currentInfo.TaskNum == null ? 0 : Convert.ToInt32(currentInfo.TaskNum),
                         CurrentTime = currentInfo.RealTime == null ? 0 : Convert.ToInt32(currentInfo.RealTime),
                         CurrentModify = currentInfo.ModifyTime == null ? 0 : Convert.ToInt32(currentInfo.ModifyTime),
-                        CurrentAvg = currentInfo.ModifyAvg == null ? 0 : currentInfo.ModifyAvg,
-                        LastTask = lastInfo == null || null == lastInfo.TaskNum ? 0 : Convert.ToInt32(lastInfo.TaskNum),
-                        LastTime = lastInfo == null || null == lastInfo.RealTime
+                        CurrentAvg = currentInfo.ModifyAvg,
+                        LastTask = lastInfo?.TaskNum == null ? 0 : Convert.ToInt32(lastInfo.TaskNum),
+                        LastTime = lastInfo?.RealTime == null
                             ? 0
                             : Convert.ToInt32(lastInfo.RealTime),
-                        LastModify = lastInfo == null || null == lastInfo.ModifyTime
+                        LastModify = lastInfo?.ModifyTime == null
                             ? 0
                             : Convert.ToInt32(lastInfo.ModifyTime),
-                        LastAvg = lastInfo == null || null == lastInfo.ModifyAvg
-                            ? 0
-                            : lastInfo.ModifyAvg,
+                        LastAvg = lastInfo?.ModifyAvg ?? 0,
                     }).ToList();
                 return result;
             }

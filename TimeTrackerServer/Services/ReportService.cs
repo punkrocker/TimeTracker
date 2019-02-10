@@ -88,6 +88,8 @@ namespace TimeTrackerServer.Services
 
         public static void ModifyProjectTime(int projectId, Int32 changeTime)
         {
+            if (changeTime==0)
+                return;
             using (var db = new TimeTrackerEntities())
             {
                 DateTime today = DateTime.Now;

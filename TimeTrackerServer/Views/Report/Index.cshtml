@@ -197,7 +197,7 @@
         var td = $(id);
         // 根据表格文本创建文本框 并加入表表中--文本框的样式自己调整
         var text = td.text();
-        var txt = $("<input type='text' class='edit_text'>").val(text);
+        var txt = $("<input type='text' class='edit_text' style='width:100px;text-align:left;'>").val(text);
         txt.keypress(function(event) { 
             var keyCode = event.which; 
             if (keyCode == 46 || (keyCode >= 48 && keyCode <=57)) 

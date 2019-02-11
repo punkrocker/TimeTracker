@@ -198,8 +198,8 @@ namespace TimeTrackerServer.Services
             {
                 if (!title.Contains(customerProjectDetail.TeamName))
                     title.Add(customerProjectDetail.TeamName);
-
             }
+            title.Add("Avg");
 
             result.Add(title);
             List<string> projects = new List<string>();
@@ -210,7 +210,7 @@ namespace TimeTrackerServer.Services
                 {
                     projects.Add(customerProjectDetail.ProjectName);
                     line = new List<string> {customerProjectDetail.ProjectName};
-                    for (int i = 0; i < title.Count - 1; i++)
+                    for (int i = 0; i < title.Count - 2; i++)
                     {
                         line.Add("");
                     }
@@ -224,8 +224,18 @@ namespace TimeTrackerServer.Services
 
                 if (customerProjectDetail.TaskCount != null && customerProjectDetail.TaskCount != 0)
                 {
-                    line[title.IndexOf(customerProjectDetail.TeamName)] = customerProjectDetail.TimeCount.ToString() + "/" + customerProjectDetail.TaskCount.ToString();
+                    line[title.IndexOf(customerProjectDetail.TeamName)] = customerProjectDetail.TaskCount.ToString();
                 }
+            }
+
+            for (int i = 1; i < result.Count; i++)
+            {
+                List<string> line = result[i];
+                string projectName = line[0];
+                List<CustomerProjectDetail> selectedCustomerProjectDetails = customerProjectDetails.Where(a => a.ProjectName.Equals(projectName)).ToList();
+                int? x = selectedCustomerProjectDetails.Sum(a => a.TaskCount);
+                int? y = selectedCustomerProjectDetails.Sum(a => a.TimeCount);
+                line.Add(Math.Round(Convert.ToDouble(y) / Convert.ToDouble(x), 2).ToString());
             }
 
             List<string> total = new List<string>
@@ -239,7 +249,7 @@ namespace TimeTrackerServer.Services
                 int? taskCount = customerProjectDetails.Where(a => a.TeamName.Equals(teamName)).Sum(a => a.TaskCount);
                 int? timeCount = customerProjectDetails.Where(a => a.TeamName.Equals(teamName)).Sum(a => a.TimeCount);
                 if (timeCount != 0)
-                    total.Add(timeCount.ToString() + "/" + taskCount.ToString());
+                    total.Add(taskCount.ToString());
             }
 
             return result;

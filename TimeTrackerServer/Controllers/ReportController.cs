@@ -58,9 +58,9 @@ namespace TimeTrackerServer.Controllers
         }
 
         [HttpPost]
-        public ActionResult ModifyReport(int projectID, Int32 modifyTime)
+        public ActionResult ModifyReport(int projectID, int teamID, Int32 modifyTime)
         {
-            ReportService.ModifyProjectTime(projectID, modifyTime);
+            ReportService.ModifyProjectTime(projectID, teamID, modifyTime);
             return View();
         }
     }

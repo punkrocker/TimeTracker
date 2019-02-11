@@ -26,12 +26,13 @@ namespace TimeTrackerServer.Services
                     from i in pro.DefaultIfEmpty()
                     where i.ProjectName != null
                     join member in db.T_PM_Member.Where(a =>
-                            a.Charge.Equals(SystemConst.StatusCharge) && a.UserID == userId) on reportRecords.Key
-                            .ProjectID equals member.ProjectID
+                        a.Charge.Equals(SystemConst.StatusCharge) && a.UserID == userId) on reportRecords.Key
+                        .ProjectID equals member.ProjectID
                     join team in db.T_SD_CustomerTeam on reportRecords.Key.TeamID equals team.TeamID
                     select new ReportInfo
                     {
                         ProjectName = i.ProjectName,
+                        TeamId = team.TeamID,
                         TeamName = team.TeamName,
                         TaskNum = reportRecords.Sum(t => t.RealTask),
                         RealTime = reportRecords.Sum(t => t.TaskTime),
@@ -57,6 +58,7 @@ namespace TimeTrackerServer.Services
                     {
                         ProjectId = i.ProjectID,
                         ProjectName = i.ProjectName,
+                        TeamId = team.TeamID,
                         TeamName = team.TeamName,
                         TaskNum = reportRecords.Sum(t => t.RealTask),
                         RealTime = reportRecords.Sum(t => t.TaskTime),
@@ -83,6 +85,7 @@ namespace TimeTrackerServer.Services
                     {
                         ProjectId = currentInfo.ProjectId ?? 0,
                         ProjectName = currentInfo.ProjectName ?? string.Empty,
+                        TeamId = currentInfo.TeamId,
                         TeamName = currentInfo.TeamName,
                         CurrentTask = currentInfo.TaskNum == null ? 0 : Convert.ToInt32(currentInfo.TaskNum),
                         CurrentTime = currentInfo.RealTime == null ? 0 : Convert.ToInt32(currentInfo.RealTime),
@@ -101,15 +104,16 @@ namespace TimeTrackerServer.Services
             }
         }
 
-        public static void ModifyProjectTime(int projectId, Int32 changeTime)
+        public static void ModifyProjectTime(int projectId, int teamId, Int32 changeTime)
         {
-            if (changeTime==0)
+            if (changeTime == 0)
                 return;
             using (var db = new TimeTrackerEntities())
             {
                 DateTime today = DateTime.Now;
                 var allProjectTasks = db.T_PM_Task.Where(a =>
-                        a.ProjectID == projectId && a.TaskDate.Year == today.Year && a.TaskDate.Month == today.Month)
+                        a.ProjectID == projectId && a.TeamID == teamId && a.TaskDate.Year == today.Year &&
+                        a.TaskDate.Month == today.Month)
                     .ToList();
                 int index = 0;
                 //获取变化量为增还是为减
@@ -199,7 +203,7 @@ namespace TimeTrackerServer.Services
                 if (!title.Contains(customerProjectDetail.TeamName))
                     title.Add(customerProjectDetail.TeamName);
             }
-            title.Add("Avg");
+            title.Add("Avg Speed");
 
             result.Add(title);
             List<string> projects = new List<string>();

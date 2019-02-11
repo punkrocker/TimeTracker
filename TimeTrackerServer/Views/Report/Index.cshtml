@@ -170,7 +170,7 @@
                                     <td class="highlight" width="10%">
                                         @reportInfo.CurrentTime
                                     </td>
-                                    <td id="@reportInfo.ProjectId" class="highlight" width="10%" ondblclick="edittime(@reportInfo.ProjectId)">
+                                    <td id="@reportInfo.ProjectId" class="highlight" width="10%" ondblclick="editTime(@reportInfo.ProjectId, @reportInfo.TeamId)">
                                         @reportInfo.CurrentModify
                                     </td>
                                     <td class="highlight" width="10%">
@@ -210,7 +210,7 @@
         if (r != null) return unescape(r[2]); return null;
     }
 
-    function edittime(projectID) {
+    function editTime(projectID, teamID) {
         var id = '#' + projectID;
         var td = $(id);
         // 根据表格文本创建文本框 并加入表表中--文本框的样式自己调整
@@ -236,7 +236,7 @@
             $.ajax({
                 url: "ModifyReport",
                 type: "post",
-                data: { projectID: projectID, modifyTime: more },
+                data: { projectID: projectID, teamID:teamID, modifyTime: more },
                 success: function (date) {
                     window.location.href = window.location.href;
                 },

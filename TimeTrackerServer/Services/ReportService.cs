@@ -242,6 +242,29 @@ namespace TimeTrackerServer.Services
                 line.Add(Math.Round(Convert.ToDouble(y) / Convert.ToDouble(x), 2).ToString());
             }
 
+            int volumnSummary = Convert.ToInt32(customerProjectDetails.Sum(a => a.TaskCount));
+            List<string> volume = new List<string>
+            {
+                "Volume Percent"
+            };
+            result.Add(volume);
+
+            int timeSummary = Convert.ToInt32(customerProjectDetails.Sum(a => a.TimeCount));
+            List<string> time = new List<string>
+            {
+                "Time Percent"
+            };
+            result.Add(time);
+
+            for (int i = 1; i < title.Count - 1; i++)
+            {
+                string teamName = title[i];
+                volume.Add((Convert.ToDouble(customerProjectDetails.Where(a => a.TeamName.Equals(teamName))
+                                .Sum(a => a.TaskCount)) / volumnSummary).ToString("P"));
+                time.Add((Convert.ToDouble(customerProjectDetails.Where(a => a.TeamName.Equals(teamName))
+                              .Sum(a => a.TimeCount)) / timeSummary).ToString("P"));
+            }
+
             List<string> total = new List<string>
             {
                 "Total"
@@ -255,7 +278,10 @@ namespace TimeTrackerServer.Services
                 if (timeCount != 0)
                     total.Add(taskCount.ToString());
             }
-
+            
+            volume.Add("");
+            time.Add("");
+            total.Add("");
             return result;
         }
     }

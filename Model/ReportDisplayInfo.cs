@@ -7,6 +7,7 @@
         {
             get; set;
         }
+        public string TeamName { get; set;  }
 
         public int CurrentTask { get; set; }
         public int LastTask { get; set; }

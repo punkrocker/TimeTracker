@@ -9,6 +9,7 @@ namespace Model
     {
         public int? ProjectId { get; set; }
         public string ProjectName { get; set; }
+        public string TeamName { get; set; }
         public int? TaskNum { get; set; }
         public int? RealTime { get; set; }
         public int? ModifyTime { get; set; }

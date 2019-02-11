@@ -19,17 +19,20 @@ namespace TimeTrackerServer.Services
                 DateTime lastMonth = reportMonth.AddMonths(-1);
                 var reportInfos = (from reportRecords in db.T_PM_Task
                         .Where(a => a.TaskDate.Year == lastMonth.Year && a.TaskDate.Month == lastMonth.Month)
-                        .GroupBy(a => a.ProjectID)
-                    join project in db.T_PM_Project.Where(a => a.CustomerID == customerId) on reportRecords.Key equals
+                        .GroupBy(a => new {a.ProjectID, a.TeamID})
+                    join project in db.T_PM_Project.Where(a => a.CustomerID == customerId) on reportRecords.Key
+                            .ProjectID equals
                         project.ProjectID into pro
                     from i in pro.DefaultIfEmpty()
                     where i.ProjectName != null
-                                   join member in db.T_PM_Member.Where(a =>
-                            a.Charge.Equals(SystemConst.StatusCharge) && a.UserID == userId) on reportRecords.Key equals
-                        member.ProjectID
-                                   select new ReportInfo
+                    join member in db.T_PM_Member.Where(a =>
+                            a.Charge.Equals(SystemConst.StatusCharge) && a.UserID == userId) on reportRecords.Key
+                            .ProjectID equals member.ProjectID
+                    join team in db.T_SD_CustomerTeam on reportRecords.Key.TeamID equals team.TeamID
+                    select new ReportInfo
                     {
                         ProjectName = i.ProjectName,
+                        TeamName = team.TeamName,
                         TaskNum = reportRecords.Sum(t => t.RealTask),
                         RealTime = reportRecords.Sum(t => t.TaskTime),
                         ModifyTime = reportRecords.Sum(t => t.ReportTime),
@@ -38,22 +41,23 @@ namespace TimeTrackerServer.Services
                     a.ModifyAvg = a.TaskNum == 0
                         ? 0
                         : Math.Round(Convert.ToDouble(a.ModifyTime) / Convert.ToDouble(a.TaskNum), 2));
+
                 var currentInfos = (from reportRecords in db.T_PM_Task
                         .Where(a => a.TaskDate.Year == reportMonth.Year && a.TaskDate.Month == reportMonth.Month)
-                        .GroupBy(a => a.ProjectID)
-                    join project in db.T_PM_Project.Where(a => a.CustomerID == customerId) on reportRecords.Key equals
-                        project
-                            .ProjectID
-                        into pro
+                        .GroupBy(a => new {a.ProjectID, a.TeamID})
+                    join team in db.T_SD_CustomerTeam on reportRecords.Key.TeamID equals team.TeamID
+                    join project in db.T_PM_Project.Where(a => a.CustomerID == customerId) on reportRecords.Key.ProjectID equals
+                        project.ProjectID into pro
                     from i in pro.DefaultIfEmpty()
                     where i.ProjectName != null
                     join member in db.T_PM_Member.Where(a =>
-                            a.Charge.Equals(SystemConst.StatusCharge) && a.UserID == userId) on reportRecords.Key equals
+                            a.Charge.Equals(SystemConst.StatusCharge) && a.UserID == userId) on reportRecords.Key.ProjectID equals
                         member.ProjectID
-                                    select new ReportInfo
+                    select new ReportInfo
                     {
                         ProjectId = i.ProjectID,
                         ProjectName = i.ProjectName,
+                        TeamName = team.TeamName,
                         TaskNum = reportRecords.Sum(t => t.RealTask),
                         RealTime = reportRecords.Sum(t => t.TaskTime),
                         ModifyTime = reportRecords.Sum(t => t.ReportTime),
@@ -63,12 +67,23 @@ namespace TimeTrackerServer.Services
                         ? 0
                         : Math.Round(Convert.ToDouble(a.ModifyTime) / Convert.ToDouble(a.TaskNum), 2));
                 var result = (from currentInfo in currentInfos
-                    join reportInfo in reportInfos on currentInfo.ProjectName equals reportInfo.ProjectName into tmp
+                    join reportInfo in reportInfos
+                        on  new
+                        {
+                            currentInfo.ProjectName,
+                            currentInfo.TeamName
+                        } equals new
+                        {
+                            reportInfo.ProjectName,
+                            reportInfo.TeamName
+                        }
+                        into tmp
                     from lastInfo in tmp.DefaultIfEmpty()
                     select new ReportDisplayInfo
                     {
                         ProjectId = currentInfo.ProjectId ?? 0,
                         ProjectName = currentInfo.ProjectName ?? string.Empty,
+                        TeamName = currentInfo.TeamName,
                         CurrentTask = currentInfo.TaskNum == null ? 0 : Convert.ToInt32(currentInfo.TaskNum),
                         CurrentTime = currentInfo.RealTime == null ? 0 : Convert.ToInt32(currentInfo.RealTime),
                         CurrentModify = currentInfo.ModifyTime == null ? 0 : Convert.ToInt32(currentInfo.ModifyTime),

@@ -83,15 +83,5 @@ namespace TimeTrackerServer.Controllers
             ReportService.ModifyProjectTime(projectID, teamID, modifyTime);
             return View();
         }
-
-        public ActionResult PdfTest()
-        {
-            Document document = new Document();
-            PdfWriter.GetInstance(document, new FileStream("E:\\Chap0101.pdf", FileMode.Create));
-            document.Open();
-            document.Add(new Paragraph("Hello World"));
-            document.Close();
-            return View();
-        }
     }
 }

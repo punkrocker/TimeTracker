@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 using Model;
 using Model.Dto;
 using Newtonsoft.Json;
@@ -78,6 +81,16 @@ namespace TimeTrackerServer.Controllers
         public ActionResult ModifyReport(int projectID, int teamID, Int32 modifyTime)
         {
             ReportService.ModifyProjectTime(projectID, teamID, modifyTime);
+            return View();
+        }
+
+        public ActionResult PdfTest()
+        {
+            Document document = new Document();
+            PdfWriter.GetInstance(document, new FileStream("E:\\Chap0101.pdf", FileMode.Create));
+            document.Open();
+            document.Add(new Paragraph("Hello World"));
+            document.Close();
             return View();
         }
     }

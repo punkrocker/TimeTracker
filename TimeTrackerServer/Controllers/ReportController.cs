@@ -4,8 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
 using Model;
 using Model.Dto;
 using Newtonsoft.Json;

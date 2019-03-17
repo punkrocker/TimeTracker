@@ -190,11 +190,11 @@
                 <div id="comment">
                     @if (!ViewBag.comment.ToString().Trim().Equals(string.Empty))
                     {
-                        <p><h4><b>Comment:</b></h4></p>
+                        <p style="margin-bottom: 15px"><h4><b>Comment:</b></h4></p>
                         var comments = ViewBag.comment.Split('\n');
                         foreach (var comm in comments)
                         {
-                            <span style="margin: 15px">@comm</span><br />
+                            <span class="col-md-12">@comm</span>
                         }
                     }
                 </div>

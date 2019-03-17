@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Model;
 using Model.Dto;
+using TimeTrackerServer.Models;
 
 namespace TimeTrackerServer.Services
 {
@@ -44,6 +45,24 @@ namespace TimeTrackerServer.Services
             {
                 return db.T_PM_Project.Where(a => a.CustomerID == customerID && a.Status == SystemConst.StatusIssued)
                     .ToList();
+            }
+        }
+
+        public static IList<Customer> GetCustomerByUser(int userId)
+        {
+            using (var db = new TimeTrackerEntities())
+            {
+                var selectedCustomers = (from project in db.T_PM_Project
+                    join member in db.T_PM_Member.Where(a =>
+                            a.Charge.Equals(SystemConst.StatusCharge) && a.UserID == userId) on project.ProjectID equals
+                        member.ProjectID
+                    join customer in db.T_SD_Customer on project.CustomerID equals customer.CustomerID
+                    select new Customer
+                    {
+                        CustomerID = customer.CustomerID,
+                        CustomerName = customer.CustomerName
+                    }).Distinct().ToList();
+                return selectedCustomers;
             }
         }
     }

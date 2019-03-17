@@ -20,7 +20,7 @@ namespace TimeTrackerServer.Controllers
         {
             ReportService reportService = new ReportService();
             ViewBag.model = reportService.GetTwoMonthReportInfo(customerId, reportDate, Convert.ToInt16(Session["UserId"]));
-            ViewBag.customers = CustomerService.GetAllCustomers();
+            ViewBag.customers = CustomerService.GetCustomerByUser(Convert.ToInt16(Session["UserID"]));
             return View();
         }
 

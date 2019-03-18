@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TimeTrackerServer.Models;
 
 namespace TimeTrackerServer.Services
 {
@@ -100,6 +101,29 @@ namespace TimeTrackerServer.Services
                             : Convert.ToInt32(lastInfo.ModifyTime),
                         LastAvg = lastInfo?.ModifyAvg ?? 0,
                     }).ToList();
+                switch (sortType)
+                {
+                    case (int)SortType.Project:
+                        result = result.OrderBy(a => a.ProjectName).ToList();
+                        break;
+                    case (int)SortType.Team:
+                        result = result.OrderBy(a => a.TeamName).ToList();
+                        break;
+                    case (int)SortType.Tasks:
+                        result = result.OrderBy(a => a.CurrentTask).ToList();
+                        break;
+                    case (int)SortType.Time:
+                        result = result.OrderBy(a => a.CurrentTime).ToList();
+                        break;
+                    case (int)SortType.Modify:
+                        result = result.OrderBy(a => a.CurrentModify).ToList();
+                        break;
+                    case (int)SortType.Avg:
+                        result = result.OrderBy(a => a.CurrentAvg).ToList();
+                        break;
+                    default:
+                        break;
+                }
                 return result;
             }
         }

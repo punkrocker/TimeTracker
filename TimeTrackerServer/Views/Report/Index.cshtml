@@ -170,7 +170,10 @@
                                     <td class="highlight" width="10%">
                                         @reportInfo.CurrentTime
                                     </td>
-                                    <td id="@reportInfo.ProjectId" class="highlight" width="10%" ondblclick="editTime(@reportInfo.ProjectId, @reportInfo.TeamId)">
+                                    @{
+                                        var tmpId = "X" + @reportInfo.ProjectId + @reportInfo.TeamId;
+                                    }
+                                    <td id="@tmpId" class="highlight" width="10%" ondblclick="editTime(@reportInfo.ProjectId, @reportInfo.TeamId)">
                                         @reportInfo.CurrentModify
                                     </td>
                                     <td class="highlight" width="10%">
@@ -211,7 +214,7 @@
     }
 
     function editTime(projectID, teamID) {
-        var id = '#' + projectID;
+        var id = '#X' + projectID + teamID;
         var td = $(id);
         // 根据表格文本创建文本框 并加入表表中--文本框的样式自己调整
         var text = td.text();
@@ -317,7 +320,7 @@
                         month = month.substring(month.length - 2, month.length);
                         currentMonth = myDate.getFullYear() + '-' + month;
                     }
-                    window.location.href = "/Report/Index?customerId=" + customer_id + "&reportDate=" + currentMonth + "&sortType=" + i;
+                    window.location.href = "/Report/Index?customerId=" + customer_id + "&reportDate=" + currentMonth + "&sortType=" + n;
                 }
             }(i));
         }

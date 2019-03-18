@@ -16,10 +16,13 @@ namespace TimeTrackerServer.Controllers
     public class ReportController : Controller
     {
         // GET: Report
-        public ActionResult Index(int? customerId, string reportDate)
+        public ActionResult Index(int? customerId, string reportDate, int? sortType)
         {
             ReportService reportService = new ReportService();
-            ViewBag.model = reportService.GetTwoMonthReportInfo(customerId, reportDate, Convert.ToInt16(Session["UserId"]));
+            ViewBag.model = reportService.GetTwoMonthReportInfo(customerId,
+                reportDate,
+                Convert.ToInt16(Session["UserId"]),
+                sortType);
             ViewBag.customers = CustomerService.GetCustomerByUser(Convert.ToInt16(Session["UserID"]));
             return View();
         }

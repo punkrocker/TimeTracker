@@ -7,7 +7,7 @@ namespace TimeTrackerServer.Services
 {
     public class ReportService
     {
-        public IList<ReportDisplayInfo> GetTwoMonthReportInfo(int? customerId, string reportDate, int userId)
+        public IList<ReportDisplayInfo> GetTwoMonthReportInfo(int? customerId, string reportDate, int userId, int? sortType)
         {
             if (customerId == null)
                 return new List<ReportDisplayInfo>();

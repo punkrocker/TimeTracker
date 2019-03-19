@@ -238,10 +238,17 @@
                 newText = text;
             td.text(newText);
             more = newText - text;
+            var currentMonth = GetQueryString("reportDate");
+            if (currentMonth === null || currentMonth === '') {
+                var myDate = new Date();
+                var month = '0' + (myDate.getMonth() + 1);
+                month = month.substring(month.length - 2, month.length);
+                currentMonth = myDate.getFullYear() + '-' + month;
+            }
             $.ajax({
                 url: "ModifyReport",
                 type: "post",
-                data: { projectID: projectID, teamID:teamID, modifyTime: more },
+                data: { projectID: projectID, teamID: teamID, modifyTime: more, month: currentMonth },
                 success: function (date) {
                     window.location.href = window.location.href;
                 },

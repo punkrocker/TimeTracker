@@ -128,16 +128,18 @@ namespace TimeTrackerServer.Services
             }
         }
 
-        public static void ModifyProjectTime(int projectId, int teamId, Int32 changeTime)
+        public static void ModifyProjectTime(int projectId, int teamId, int changeTime, string month)
         {
             if (changeTime == 0)
                 return;
             using (var db = new TimeTrackerEntities())
             {
-                DateTime today = DateTime.Now;
+                string[] date = month.Split('-');
+                int year = Convert.ToInt16(date[0]);
+                int mon = Convert.ToInt16(date[1]);
                 var allProjectTasks = db.T_PM_Task.Where(a =>
-                        a.ProjectID == projectId && a.TeamID == teamId && a.TaskDate.Year == today.Year &&
-                        a.TaskDate.Month == today.Month)
+                        a.ProjectID == projectId && a.TeamID == teamId && a.TaskDate.Year == year &&
+                        a.TaskDate.Month == mon)
                     .ToList();
                 int index = 0;
                 //获取变化量为增还是为减

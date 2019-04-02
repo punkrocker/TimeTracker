@@ -155,9 +155,9 @@ namespace TT
                         UserId = Convert.ToInt32(dr["UserID"]),
                         TaskDate = Convert.ToDateTime(dr["TaskDate"]),
                         TeamId = Convert.ToInt32(dr["TeamID"]),
-                        PlanTask = Convert.ToUInt32(dr["PlanTask"]),
-                        RealTask = Convert.ToUInt32(dr["RealTask"]),
-                        TaskTime = Convert.ToUInt64(dr["TaskTime"]),
+                        PlanTask = Convert.ToInt32(dr["PlanTask"]),
+                        RealTask = Convert.ToInt32(dr["RealTask"]),
+                        TaskTime = Convert.ToInt32(dr["TaskTime"]),
                         Desc = dr["Desc"].ToString(),
                         SubmitTime = Convert.ToDateTime(dr["SubmitTime"])
                     };
@@ -170,7 +170,6 @@ namespace TT
                     SqliteOper sp = new SqliteOper();
                     sp.ExecuteNonQuery("Update T_PM_Task set Status = '" + AppConst.Uploaded + "' Where  UserID = '" + TimeRecorder.UserID + "' And Status = '" + AppConst.Comfirmed + "';Update T_PM_UserTime Set Status = '" + AppConst.Finished + "' Where UserID = '" + TimeRecorder.UserID + "' And Status = '" + AppConst.Resolved + "';Update T_PM_Project Set Status = '" + AppConst.Finished + "' Where Status = '" + AppConst.Executing + "'");
                     MessageBox.Show(ConfigFile.Languege.ReadValue("UploadSuccess"), "", MessageBoxButton.OK, MessageBoxImage.None);
-                    sp.ExecuteNonQuery("Delete From T_PM_Task Where Status = '" + AppConst.Uploaded + "';Delete From T_PM_UserTime Where Status = '" + AppConst.Finished + "'");
                     MenuWindow.getMain().RefreshGrid();
                     TimeRecorder.getRecorder().RecordingProject = null;
                     this.Hide();

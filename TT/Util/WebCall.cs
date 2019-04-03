@@ -13,8 +13,7 @@ namespace TT.Util
 {
     public class WebCall
     {
-        public static string BaseUrl = "http://localhost/api/";
-        //public static string BaseUrl = "http://localhost:55388/api/";
+        public static string BaseUrl = "http://222222/api/";
 
         public static string Login = "Login";
         public static string GetProjects = "GetProjects";
@@ -63,51 +62,16 @@ namespace TT.Util
             }
         }
 
-        public static string UploadFile(string fileName)
-        {
-            WebClient myWebClient = new WebClient();
-            byte[] buffer = myWebClient.UploadFile(WebCall.BaseUrl + "Picture/Upload", "POST", fileName);
-            var msg = Encoding.UTF8.GetString(buffer);
-            return msg;
-        }
-
-        public static Stream GetPic(string url)
-        {
-            Stream mStream;
-            try
-            {
-                Uri mUri = new Uri(WebCall.BaseUrl + SystemConst.PicPath + url);
-                HttpWebRequest mRequest = (HttpWebRequest) WebRequest.Create(mUri);
-                mRequest.Method = "GET";
-                mRequest.Timeout = 200;
-                mRequest.ContentType = "text/html;charset=utf-8";
-                HttpWebResponse mResponse = (HttpWebResponse) mRequest.GetResponse();
-                mStream = mResponse.GetResponseStream();
-            }
-            catch
-            {
-                return null;
-            }
-
-            return mStream;
-        }
-
         public static void LoadUrl()
         {
             using (var client = new HttpClient())
             {
                 Configuration config =
                     System.Configuration.ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-                string ip = config.AppSettings.Settings["url"].Value;
-                BaseUrl = string.Format("http://{0}:8730/", ip);
+                BaseUrl = config.AppSettings.Settings["url"].Value;
             }
 
             //BaseUrl = "http://localhost:8730/";
         }
-    }
-
-    internal class IP
-    {
-        public string IPAddr { get; set; }
     }
 }

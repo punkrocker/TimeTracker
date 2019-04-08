@@ -70,8 +70,6 @@ namespace TT.Util
                     System.Configuration.ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
                 BaseUrl = config.AppSettings.Settings["url"].Value;
             }
-
-            //BaseUrl = "http://localhost:8730/";
         }
     }
 }

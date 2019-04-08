@@ -26,6 +26,7 @@ namespace TT
             //Thread.Sleep(2000);
 
             InitializeComponent();
+            WebCall.LoadUrl();
             this.Title = ConfigFile.Languege.ReadValue("lblLogin");
             lblUserName.Content = ConfigFile.Languege.ReadValue("lblUser");
             lblPassword.Content = ConfigFile.Languege.ReadValue("lblPwd");

@@ -30,6 +30,10 @@ namespace TimeTrackerServer.Services
         {
             using (var db = new TimeTrackerEntities())
             {
+                var projects = (from project in db.T_PM_Project
+                    join member in db.T_PM_Member on project.ProjectID equals member.ProjectID
+                    select new T_PM_Project
+                        { });
                 var taskSummary = (from task in db.T_PM_Task
                         .Where(a => a.TaskDate.Year == DateTime.Today.Year
                                     && a.TaskDate.Month == DateTime.Today.Month

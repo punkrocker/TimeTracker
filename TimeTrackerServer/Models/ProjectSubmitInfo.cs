@@ -12,7 +12,7 @@ namespace TimeTrackerServer.Models
         public int UserID { get; set; }
         public string UseName { get; set; }
         public int Charge { get; set; }
-        public int Task { get; set; }
-        public int Time { get; set; }
+        public int? Task { get; set; }
+        public int? Time { get; set; }
     }
 }

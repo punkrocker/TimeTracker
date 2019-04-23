@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Model;
+using TimeTrackerServer.Models;
+using TimeTrackerServer.Services;
 
 namespace TimeTrackerServer.Controllers
 {
@@ -16,7 +19,8 @@ namespace TimeTrackerServer.Controllers
 
         public ActionResult Submit()
         {
-            return View();
+            List<ProjectSubmitInfo> submitInfos = ProjectService.GetProjectSubmitInfos(32).ToList();
+            return Content(AppUtils.JsonSerializer(submitInfos));
         }
     }
 }

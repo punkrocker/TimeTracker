@@ -26,7 +26,7 @@ namespace TimeTrackerServer.Services
         //group by UserID) t4 on t3.UserID = t4.UserID
 
         //    where t1.ProjectID in (select ProjectID from T_PM_Member where UserID = 32 and Charge = 1);
-        public IList<ProjectSubmitInfo> GetProjectSubmitInfos(int userId)
+        public static IList<ProjectSubmitInfo> GetProjectSubmitInfos(int userId)
         {
             using (var db = new TimeTrackerEntities())
             {
@@ -36,28 +36,31 @@ namespace TimeTrackerServer.Services
                                     && a.TaskDate.Day == DateTime.Today.Day)
                         .GroupBy(a => new
                         {
-                            a.UserID
+                            a.UserID,
+                            a.ProjectID
                         })
-                    select new T_PM_Task
+                    select new TaskSummary
                     {
-                        UserID = task.Key.UserID,
+                        UserId = task.Key.UserID,
+                        ProjectId = task.Key.ProjectID,
                         RealTask = task.Sum(a => a.RealTask),
                         ReportTime = task.Sum(a => a.ReportTime)
                     });
                 var projectSubmitInfos = (from project in db.T_PM_Project
                     join member in db.T_PM_Member on project.ProjectID equals member.ProjectID
                     join user in db.T_Sys_UserInfo on member.UserID equals user.UserID
-                    join task in taskSummary on member.UserID equals task.UserID
+                    join task in taskSummary on new {UserId = member.UserID, ProjectId = member.ProjectID} equals new
+                        {task.UserId, task.ProjectId}
                     select new ProjectSubmitInfo
                     {
                         ProjectID = project.ProjectID,
                         ProjectName = project.ProjectName,
                         UserID = user.UserID,
                         UseName = user.UseName,
-                        Task = Convert.ToInt32(task.RealTask),
-                        Time = Convert.ToInt32(task.ReportTime)
+                        Task = task.RealTask,
+                        Time = task.ReportTime
                     }).ToList();
-                return projectSubmitInfos;
+                return projectSubmitInfos.ToList();
             }
         }
     }

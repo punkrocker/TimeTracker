@@ -200,6 +200,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\ProjectSubmitInfo.cs" />
+    <Compile Include="Models\SimpleProject.cs" />
     <Compile Include="Models\SortType.cs" />
     <Compile Include="Models\TaskSummary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -31,9 +31,13 @@ namespace TimeTrackerServer.Services
             using (var db = new TimeTrackerEntities())
             {
                 var projects = (from project in db.T_PM_Project
-                    join member in db.T_PM_Member on project.ProjectID equals member.ProjectID
-                    select new T_PM_Project
-                        { });
+                    join member in db.T_PM_Member.Where(a => a.UserID == userId && a.Charge.Equals(SystemConst.StatusCharge))
+                        on project.ProjectID equals member.ProjectID
+                    select new SimpleProject
+                    {
+                        ProjectId = project.ProjectID,
+                        ProjectName = project.ProjectName
+                    }).ToList();
                 var taskSummary = (from task in db.T_PM_Task
                         .Where(a => a.TaskDate.Year == DateTime.Today.Year
                                     && a.TaskDate.Month == DateTime.Today.Month
@@ -50,14 +54,14 @@ namespace TimeTrackerServer.Services
                         RealTask = task.Sum(a => a.RealTask),
                         ReportTime = task.Sum(a => a.ReportTime)
                     });
-                var projectSubmitInfos = (from project in db.T_PM_Project
-                    join member in db.T_PM_Member on project.ProjectID equals member.ProjectID
+                var projectSubmitInfos = (from project in projects
+                                          join member in db.T_PM_Member on project.ProjectId equals member.ProjectID
                     join user in db.T_Sys_UserInfo on member.UserID equals user.UserID
                     join task in taskSummary on new {UserId = member.UserID, ProjectId = member.ProjectID} equals new
                         {task.UserId, task.ProjectId}
                     select new ProjectSubmitInfo
                     {
-                        ProjectID = project.ProjectID,
+                        ProjectID = project.ProjectId,
                         ProjectName = project.ProjectName,
                         UserID = user.UserID,
                         UseName = user.UseName,

@@ -20,7 +20,8 @@ namespace TimeTrackerServer.Controllers
         public ActionResult Submit()
         {
             List<ProjectSubmitInfo> submitInfos = ProjectService.GetProjectSubmitInfos(32).ToList();
-            return Content(AppUtils.JsonSerializer(submitInfos));
+            ViewBag.model = submitInfos;
+            return View();
         }
     }
 }

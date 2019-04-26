@@ -1,4 +1,5 @@
-﻿
+﻿@using TimeTrackerServer.Models
+
 @{
     ViewBag.Title = "Submit";
 }
@@ -6,85 +7,32 @@
 <h2>Submit</h2>
 
 <div class="portlet-body">
-    <div class="row">
-        <div class="col-lg-2 col-md-4 col-xs-6">
-            <div class="mt-element-ribbon bg-grey-steel">
-                <div class="ribbon ribbon-color-default uppercase">Ribbon</div>
-                <p class="ribbon-content">Duis mollis, est non commodo luctus, nisi erat porttitor ligula</p>
-                <p class="ribbon-content">Duis mollis, est non commodo luctus, nisi erat porttitor ligula</p>
-                <p class="ribbon-content">Duis mollis, est non commodo luctus, nisi erat porttitor ligula</p>
+    @for (int i = 0; i < ViewBag.model.Count; i++)
+    {
+        var projectSubmitInfo = ViewBag.model[i];
+        <div class="col-md-4">
+            <div class="portlet box blue">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-gift"></i>@projectSubmitInfo.ProjectName
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <ol>
+                        <li> Lorem ipsum dolor sit amet </li>
+                        <li> Consectetur adipiscing elit </li>
+                        <li> Integer molestie lorem at massa </li>
+                        <li> Facilisis in pretium nisl aliquet </li>
+                        <li> Nulla volutpat aliquam velit </li>
+                        <li> Faucibus porta lacus fringilla vel </li>
+                        <li> Aenean sit amet erat nunc </li>
+                        <li> Eget porttitor lorem </li>
+                    </ol>
+                </div>
             </div>
         </div>
-        <div class="col-lg-2 col-md-4 col-xs-6">
-            <div class="mt-element-ribbon bg-grey-steel">
-                <div class="ribbon ribbon-color-primary uppercase">Ribbon</div>
-                <p class="ribbon-content">Duis mollis, est non commodo luctus, nisi erat porttitor ligula</p>
-            </div>
-        </div>
-        <div class="col-lg-2 col-md-4 col-xs-6">
-            <div class="mt-element-ribbon bg-grey-steel">
-                <div class="ribbon ribbon-color-info uppercase">Ribbon</div>
-                <p class="ribbon-content">Duis mollis, est non commodo luctus, nisi erat porttitor ligula</p>
-            </div>
-        </div>
-        <div class="col-lg-2 col-md-4 col-xs-6">
-            <div class="mt-element-ribbon bg-grey-steel">
-                <div class="ribbon ribbon-color-success uppercase">Ribbon</div>
-                <p class="ribbon-content">Duis mollis, est non commodo luctus, nisi erat porttitor ligula</p>
-            </div>
-        </div>
-        <div class="col-lg-2 col-md-4 col-xs-6">
-            <div class="mt-element-ribbon bg-grey-steel">
-                <div class="ribbon ribbon-color-danger uppercase ">Ribbon</div>
-                <p class="ribbon-content">Duis mollis, est non commodo luctus, nisi erat porttitor ligula</p>
-            </div>
-        </div>
-        <div class="col-lg-2 col-md-4 col-xs-6">
-            <div class="mt-element-ribbon bg-grey-steel">
-                <div class="ribbon ribbon-color-warning uppercase ">Ribbon</div>
-                <p class="ribbon-content">Duis mollis, est non commodo luctus, nisi erat porttitor ligula</p>
-            </div>
-        </div>
-    </div>
-    
-    <div class="row">
-        <div class="col-lg-2 col-md-4 col-xs-6">
-            <div class="mt-element-ribbon bg-grey-steel">
-                <div class="ribbon ribbon-color-default uppercase">Ribbon</div>
-                <p class="ribbon-content">Duis mollis, est non commodo luctus, nisi erat porttitor ligula</p>
-                <p class="ribbon-content">Duis mollis, est non commodo luctus, nisi erat porttitor ligula</p>
-                <p class="ribbon-content">Duis mollis, est non commodo luctus, nisi erat porttitor ligula</p>
-            </div>
-        </div>
-        <div class="col-lg-2 col-md-4 col-xs-6">
-            <div class="mt-element-ribbon bg-grey-steel">
-                <div class="ribbon ribbon-color-primary uppercase">Ribbon</div>
-                <p class="ribbon-content">Duis mollis, est non commodo luctus, nisi erat porttitor ligula</p>
-            </div>
-        </div>
-        <div class="col-lg-2 col-md-4 col-xs-6">
-            <div class="mt-element-ribbon bg-grey-steel">
-                <div class="ribbon ribbon-color-info uppercase">Ribbon</div>
-                <p class="ribbon-content">Duis mollis, est non commodo luctus, nisi erat porttitor ligula</p>
-            </div>
-        </div>
-        <div class="col-lg-2 col-md-4 col-xs-6">
-            <div class="mt-element-ribbon bg-grey-steel">
-                <div class="ribbon ribbon-color-success uppercase">Ribbon</div>
-                <p class="ribbon-content">Duis mollis, est non commodo luctus, nisi erat porttitor ligula</p>
-            </div>
-        </div>
-        <div class="col-lg-2 col-md-4 col-xs-6">
-            <div class="mt-element-ribbon bg-grey-steel">
-                <div class="ribbon ribbon-color-danger uppercase ">Ribbon</div>
-                <p class="ribbon-content">Duis mollis, est non commodo luctus, nisi erat porttitor ligula</p>
-            </div>
-        </div>
-        <div class="col-lg-2 col-md-4 col-xs-6">
-            <div class="mt-element-ribbon bg-grey-steel">
-                <div class="ribbon ribbon-color-warning uppercase ">Ribbon</div>
-                <p class="ribbon-content">Duis mollis, est non commodo luctus, nisi erat porttitor ligula</p>
-            </div>
-        </div>
-    </div>
+    }
 </div>

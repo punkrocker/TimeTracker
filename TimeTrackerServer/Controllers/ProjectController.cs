@@ -19,9 +19,11 @@ namespace TimeTrackerServer.Controllers
 
         public ActionResult Submit()
         {
-            List<ProjectSubmitInfo> submitInfos = ProjectService.GetProjectSubmitInfos(32).ToList();
+            int userId = Convert.ToInt32(Session["UserID"]);
+            List<ProjectSubmitInfo> submitInfos = ProjectService.GetProjectSubmitInfos(userId).ToList();
             ViewBag.model = submitInfos;
             return View();
         }
+
     }
 }

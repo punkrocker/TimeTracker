@@ -480,6 +480,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Views\Error\PageNotFound.cshtml" />
+    <Content Include="Views\Project\SubmitDetail.cshtml" />
     <None Include="Views\Shared\Error.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

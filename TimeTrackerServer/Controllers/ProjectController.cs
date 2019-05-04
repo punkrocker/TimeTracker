@@ -25,5 +25,10 @@ namespace TimeTrackerServer.Controllers
             return View();
         }
 
+        public ActionResult SubmitDetail(int projectId)
+        {
+            return View();
+        }
+
     }
 }

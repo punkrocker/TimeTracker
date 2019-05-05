@@ -1,7 +1,21 @@
-﻿
+﻿@using TimeTrackerServer.Models
+
 @{
-    ViewBag.Title = "SubmitDetail";
+    ViewBag.Title = "Submit";
 }
 
-<h2>SubmitDetail</h2>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="index.html">Project</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <span>Submit</span>
+        </li>
+    </ul>
+</div>
 
+<div class="row">
+    @ViewBag.ProjectName
+</div>

@@ -27,6 +27,7 @@ namespace TimeTrackerServer.Controllers
 
         public ActionResult SubmitDetail(int projectId)
         {
+            ViewBag.projectName = ProjectService.GetProjectName(projectId);
             return View();
         }
 

@@ -14,7 +14,8 @@ namespace TimeTrackerServer.Services
             using (var db = new TimeTrackerEntities())
             {
                 var projects = (from project in db.T_PM_Project
-                    join member in db.T_PM_Member.Where(a => a.UserID == userId && a.Charge.Equals(SystemConst.StatusCharge))
+                    join member in db.T_PM_Member.Where(a =>
+                            a.UserID == userId && a.Charge.Equals(SystemConst.StatusCharge))
                         on project.ProjectID equals member.ProjectID
                     select new SimpleProject
                     {
@@ -38,7 +39,7 @@ namespace TimeTrackerServer.Services
                         ReportTime = task.Sum(a => a.ReportTime)
                     });
                 var projectSubmitInfos = (from project in projects
-                                          join member in db.T_PM_Member on project.ProjectId equals member.ProjectID
+                    join member in db.T_PM_Member on project.ProjectId equals member.ProjectID
                     join user in db.T_Sys_UserInfo on member.UserID equals user.UserID
                     join task in taskSummary on new {UserId = member.UserID, ProjectId = member.ProjectID} equals new
                         {task.UserId, task.ProjectId}
@@ -52,6 +53,15 @@ namespace TimeTrackerServer.Services
                         Time = task.ReportTime
                     }).ToList();
                 return projectSubmitInfos.ToList();
+            }
+        }
+
+        public static string GetProjectName(int projectId)
+        {
+            using (var db = new TimeTrackerEntities())
+            {
+                var project = db.T_PM_Project.FirstOrDefault(a => a.ProjectID == projectId);
+                return project.ProjectName;
             }
         }
     }

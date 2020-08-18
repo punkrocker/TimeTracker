@@ -1,0 +1,226 @@
+﻿@{
+    ViewBag.Title = "title";
+}
+
+@section styles
+{
+    <link href="~/Content/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
+}
+
+
+@section scripts{    <script src="~/Content/global/plugins/jquery.min.js" type="text/javascript"></script>
+    <script src="~/Content/js/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
+    <script src="~/Content/global/scripts/datatable.js" type="text/javascript"></script>
+    <script src="~/Content/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
+    <script src="~/Content/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
+    <script src="~/Content/global/scripts/table-datatables-buttons.min.js" type="text/javascript"></script>
+}
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="index.html">Report</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <span>Weekly Report</span>
+        </li>
+    </ul>
+    <div class="page-toolbar">
+        <button class="btn green" type="button" data-toggle="dropdown" onclick="generate();">
+            Generate
+        </button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <div class="portlet">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Select A Client
+                    </div>
+                    <select id="single" class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true" onchange="changeCustomer(this.options[this.options.selectedIndex].value)">
+                        <option></option>
+                        @foreach (var customer in ViewBag.Customers)
+                        {
+                            var select_value = Request.QueryString["CustomerId"] != null && Request.QueryString["CustomerId"].Equals(customer.CustomerID.ToString());
+                            if (select_value)
+                            {
+                                <option value="@customer.CustomerID" selected="selected">
+                                    @customer.CustomerName
+                                </option>
+                            }
+                            else
+                            {
+                                <option value="@customer.CustomerID">
+                                    @customer.CustomerName
+                                </option>
+                            }
+                           
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="portlet">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span>Select Week</span>
+                    </div>
+                    <input id="report_month" name="report_month" type="text" class="form-control" value="@Request.QueryString["reportDate"]" placeholder="Please Select Report Week" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <!-- BEGIN SAMPLE TABLE PORTLET-->
+        <div class="portlet">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-bell-o"></i>Weekly Summary
+                </div>
+            </div>
+            <div class="portlet-body">
+  
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    reportList = [];
+
+    function GetQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+
+    function editTime(projectID, teamID) {
+        var id = '#X' + projectID + teamID;
+        var td = $(id);
+        // 根据表格文本创建文本框 并加入表表中--文本框的样式自己调整
+        var text = td.text();
+        var txt = $("<input type='text' class='edit_text' style='width:100px;text-align:left;'>").val("");
+        txt.keypress(function(event) { 
+            var keyCode = event.which; 
+            if (keyCode == 46 || (keyCode >= 48 && keyCode <=57)) 
+                return true; 
+            else 
+                return false; 
+        }).focus(function() { 
+            this.style.imeMode='disabled'; 
+        }); 
+        txt.select();
+        txt.blur(function () {
+            // 失去焦点，保存值。于服务器交互自己再写,最好ajax
+            var newText = $(this).val();
+            // 移除文本框,显示新值
+            $(this).remove();
+            if (newText.trim() === "")
+                newText = text;
+            td.text(newText);
+            more = newText - text;
+            var currentMonth = GetQueryString("reportDate");
+            if (currentMonth === null || currentMonth === '') {
+                var myDate = new Date();
+                var month = '0' + (myDate.getMonth() + 1);
+                month = month.substring(month.length - 2, month.length);
+                currentMonth = myDate.getFullYear() + '-' + month;
+            }
+            $.ajax({
+                url: "ModifyReport",
+                type: "post",
+                data: { projectID: projectID, teamID: teamID, modifyTime: more, month: currentMonth },
+                success: function (date) {
+                    window.location.href = window.location.href;
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    window.location.href = window.location.href;
+                }
+            });
+        });
+        td.text("");
+        td.append(txt);
+        txt.focus();
+    }
+
+    function generate() {
+        var comment = $('#comment').val();
+        var customerId = GetQueryString('customerId');
+        var currentMonth = GetQueryString('reportDate');
+        if (currentMonth === null || currentMonth === '') {
+            var myDate = new Date();
+            var month = '0' + (myDate.getMonth() + 1);
+            month = month.substring(month.length - 2, month.length);
+            currentMonth = myDate.getFullYear() + '-' + month;
+        }
+        $.ajax({
+            url : "Report",
+            type: "post",
+            data: { reportList: reportList, comment: comment, customerId: customerId, currentMonth: currentMonth },
+            success: function (date) {
+                var obj = window.open("about:blank");
+                obj.document.write(date);
+            }
+        });
+    }
+
+    function changeCustomer(v) {
+        window.location.href = "/Report/Week?customerId=" + v;
+    }
+
+    $(document).ready(function(){
+        reportList = @Html.Raw(Json.Encode(ViewBag.Model));
+        var table = document.getElementById("this_table");
+        makeSortable(table);
+        var table = document.getElementById("last_table");
+        makeSortable(table);
+    });
+
+    function DatePicker(beginSelector) {
+        // 仅选择日期
+        $(beginSelector).datepicker(
+            {
+                autoclose: true,
+                startView: 0,
+                format: "yyyy-mm",
+                clearBtn: true,
+                todayBtn: false,
+            }).on('changeDate',
+            function (ev) {
+                var select_month = $(beginSelector).val();
+                alert(select_month);
+                var customer_id = GetQueryString("customerId");
+                window.location.href = "/Report/Week?customerId=" + customer_id + "&reportDate=" + select_month;
+            });
+    }
+
+    DatePicker("#report_month");
+    
+    function makeSortable(table) {
+        var headers=table.getElementsByTagName("th");
+        for(var i=0;i<headers.length;i++){
+            (function(n){
+                headers[n].onclick=function() {
+                    var customer_id = GetQueryString("customerId");
+                    var currentMonth = GetQueryString("reportDate");
+                    if (currentMonth === null || currentMonth === '') {
+                        var myDate = new Date();
+                        var month = '0' + (myDate.getMonth() + 1);
+                        month = month.substring(month.length - 2, month.length);
+                        currentMonth = myDate.getFullYear() + '-' + month;
+                    }
+                    window.location.href = "/Report/Week?customerId=" + customer_id + "&reportDate=" + currentMonth + "&sortType=" + n;
+                }
+            }(i));
+        }
+    }
+</script>

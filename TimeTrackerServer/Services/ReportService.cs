@@ -128,6 +128,11 @@ namespace TimeTrackerServer.Services
             }
         }
 
+        internal dynamic GetWeekly(int? customerId, string reportDate, short v, int? sortType)
+        {
+            return 1;
+        }
+
         public static void ModifyProjectTime(int projectId, int teamId, int changeTime, string month)
         {
             if (changeTime == 0)
